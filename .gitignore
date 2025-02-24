@@ -1,0 +1,25 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Virtual environments
+.venv*/
+
+logs/
+.tox/
+.pytest_cache/
+*.pyc
+.env
+*.*~
+**/__pycache__
+tryouts*.py
+.idea
+
+
+# Home Assistant configuration
+config/*
+!config/configuration.yaml

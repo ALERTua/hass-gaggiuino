@@ -1,0 +1,12 @@
+{
+  "domain": "gaggiuino",
+  "name": "Gaggiuino",
+  "documentation": "https://github.com/ALERTua/hass-gaggiuino",
+  "issue_tracker": "https://github.com/ALERTua/hass-gaggiuino/issues",
+  "dependencies": [],
+  "codeowners": ["@alertua"],
+  "requirements": ["gaggiuino_api"],
+  "iot_class": "local_polling",
+  "version": "2025.2.1",
+  "config_flow": true
+}
