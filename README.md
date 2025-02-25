@@ -10,16 +10,17 @@ Home Assistant HACS Integration for Gaggiuino
 Repository: https://github.com/ALERTua/hass-gaggiuino
 
 Gaggiuino Repository: https://github.com/Zer0-bit/gaggiuino/releases
+
 API Library:
 - PyPi: https://pypi.org/project/gaggiuino_api/
 - Repository: https://github.com/ALERTua/gaggiuino_api
 
 ### Note: There are not many API Endpoints currently available. The current state of this integration covers the initial API endpoints introductd in https://github.com/Zer0-bit/gaggiuino/releases/tag/dev-6655d6d . Make sure your machine firmware is of at least this tag.
 
-## Integration Installation
+## Installation
 
-### Adding the integration to HACS
-<details><summary> Adding the integration to HACS </summary>
+[![Open a repository inside the Home Assistant Community Store.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=ALERTua&repository=hass-gaggiuino&category=Integration)
+<details><summary> Adding the integration to HACS manually </summary>
 
 1. Add HACS Custom Repository for this project
 
