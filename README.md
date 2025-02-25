@@ -15,7 +15,7 @@ API Library:
 - PyPi: https://pypi.org/project/gaggiuino_api/
 - Repository: https://github.com/ALERTua/gaggiuino_api
 
-### Note: There are not many API Endpoints currently available. The current state of this integration covers the initial API endpoints introductd in https://github.com/Zer0-bit/gaggiuino/releases/tag/dev-6655d6d . Make sure your machine firmware is of at least this tag.
+### Note: There are not many API Endpoints currently available. The current state of this integration covers the initial API endpoints introduced in https://github.com/Zer0-bit/gaggiuino/releases/tag/dev-6655d6d. Make sure your machine firmware is of at least this tag.
 
 ## Installation
 
@@ -58,10 +58,10 @@ search for this integration, and select it.
 
 Integration setup complete. Your Gaggiuino is now available as a device.
 
-### Note: At the moment there's no API Endpoint that allows getting the currently selected profile. That's why the initial profile selection is empty. But the selector selects the profile correctly.
+### Note: Currently no API Endpoint allows getting the currently selected profile. That's why the initial profile selection is empty. However, the selector selects the profile correctly.
 
 ![img](/images/35_integration_entries.png)
 
 ![img](/images/45_integration_device.png)
 
-### Note: While the Gagguino Profile IDs are unique, their names are not, you can have multiple profiles with the same name, but their IDs will be different. Profile selection method calls for a profile ID to be provided, that's why I decided to visually represent the selector items as both Profile Names and their corresponding IDs. I know this is not very convenient in automations, I am open to your ideas.
+### Note: While the Gagguino Profile IDs are unique, their names are not, you can have multiple profiles with the same name, but their IDs will be different. The profile selection method calls for a profile ID to be provided, that's why I decided to visually represent the selector items as both Profile Names and their corresponding IDs. I know this is not very convenient in automation, but I am open to your ideas.
