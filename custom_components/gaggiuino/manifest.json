@@ -7,7 +7,6 @@
   "documentation": "https://github.com/ALERTua/hass-gaggiuino",
   "iot_class": "local_polling",
   "issue_tracker": "https://github.com/ALERTua/hass-gaggiuino/issues",
-  "logo": "https://raw.githubusercontent.com/ALERTua/gaggiuino/main/media/GAGGIUINO_ICON_transp.png",
   "requirements": ["gaggiuino_api"],
   "version": "2025.2.1"
 }
