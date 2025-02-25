@@ -21,7 +21,7 @@ API Library:
 - PyPi: https://pypi.org/project/gaggiuino_api/
 - Repository: https://github.com/ALERTua/gaggiuino_api
 
-### Note: There are not many API Endpoints currently available. The current state of this integration covers the initial API endpoints introduced in https://github.com/Zer0-bit/gaggiuino/releases/tag/dev-6655d6d. Make sure your machine firmware is of at least this tag.
+### Note: I always implement features from the latest Gaggiuino Releases. Please make sure your machine is on the latest firmware available.
 
 ## Installation
 
@@ -63,8 +63,6 @@ search for this integration, and select it.
 ![img](/images/26_config_flow.png)
 
 Integration setup complete. Your Gaggiuino is now available as a device.
-
-### Note: Currently, no API Endpoint allows getting the currently selected profile. That's why the initial profile selection is empty. However, the selector selects the profile correctly.
 
 ![img](/images/35_integration_entries.png)
 

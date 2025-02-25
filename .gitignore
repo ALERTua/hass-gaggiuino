@@ -4,6 +4,7 @@ __pycache__/
 build/
 dist/
 wheels/
+packages/
 *.egg-info
 
 # Virtual environments
@@ -18,7 +19,6 @@ logs/
 **/__pycache__
 tryouts*.py
 .idea
-
 
 # Home Assistant configuration
 config/*

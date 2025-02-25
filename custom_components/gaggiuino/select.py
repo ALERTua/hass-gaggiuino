@@ -8,6 +8,8 @@ from typing import TYPE_CHECKING
 from homeassistant.components.select import SelectEntity
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
 
+from .const import DOMAIN
+
 if TYPE_CHECKING:
     from gaggiuino_api import GaggiuinoProfile
     from homeassistant.config_entries import ConfigEntry
@@ -26,8 +28,6 @@ async def async_setup_entry(
     async_add_entities: AddEntitiesCallback,
 ) -> None:
     """Set up the Gaggiuino select entities."""
-    from . import DOMAIN
-
     coordinator = hass.data[DOMAIN][config_entry.entry_id]
     async_add_entities([GaggiuinoProfileSelect(coordinator)])
 
@@ -53,11 +53,10 @@ class GaggiuinoProfileSelect(CoordinatorEntity, SelectEntity):
 
     def _update_profile_map(self) -> None:
         """Update the mapping of display names to profile IDs."""
-        if self.coordinator.data is None:
+        if not (profiles := self.coordinator.profiles):
             self._profile_map = {}
             return
 
-        profiles: list[GaggiuinoProfile] = self.coordinator.data.get("profiles", [])
         self._profile_map = {
             _get_profile_display_name(profile): profile.id for profile in profiles
         }
@@ -65,16 +64,16 @@ class GaggiuinoProfileSelect(CoordinatorEntity, SelectEntity):
     @property
     def current_option(self) -> str | None:
         """Return the currently selected profile."""
-        if self.coordinator.data is None:
+        if self.coordinator.profile is None:
             return None
 
-        profile: GaggiuinoProfile = self.coordinator.data.get("current_profile")
+        profile: GaggiuinoProfile = self.coordinator.profile
         return _get_profile_display_name(profile) if profile else None
 
     @property
     def options(self) -> list[str]:
         """Return the list of available profiles."""
-        if self.coordinator.data is None:
+        if self.coordinator.profiles is None:
             return []
 
         self._update_profile_map()

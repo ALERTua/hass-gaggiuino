@@ -658,14 +658,14 @@ wheels = [
 
 [[package]]
 name = "gaggiuino-api"
-version = "0.1.1"
+version = "0.1.3"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "aiohttp" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/ea/be/f4ebdfa7589b764c0eab587acffb0b9cc9361cb25a13f644a4c8f85b94f7/gaggiuino_api-0.1.1.tar.gz", hash = "sha256:62791d362717faf87e72193f0b3397db14d2c69234f4485633055212e79352c1", size = 22406 }
+sdist = { url = "https://files.pythonhosted.org/packages/82/7f/02798a5952b3edad3169462f02e5fe8e39323cfdd5dcc903493cf48c1dba/gaggiuino_api-0.1.3.tar.gz", hash = "sha256:e31797e076e26fc5e103468993ea9cb6cd396bad502c0d4f1d3ed748dabb29a0", size = 26029 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/10/8b/f2062eb553093bd0bf4ac44d9d96fb8d400568a10d42146b49ead8fc6753/gaggiuino_api-0.1.1-py3-none-any.whl", hash = "sha256:7167386f4646cb17da38ac4d98e65886d2794324ed6830361e36598b66470e5f", size = 6545 },
+    { url = "https://files.pythonhosted.org/packages/6f/9b/53ecb9d3a96e9ad8974bacc8efafab9ca1e89740924592c46fbd2c61ffb2/gaggiuino_api-0.1.3-py3-none-any.whl", hash = "sha256:667c98b1f169dabd0d437996a36a31f3aadff44efb26f4c3dc8f67679eba286d", size = 7205 },
 ]
 
 [[package]]
@@ -746,7 +746,7 @@ dev = [
 ]
 
 [package.metadata]
-requires-dist = [{ name = "gaggiuino-api", specifier = ">=0.1.1" }]
+requires-dist = [{ name = "gaggiuino-api", specifier = "==0.1.3" }]
 
 [package.metadata.requires-dev]
 dev = [

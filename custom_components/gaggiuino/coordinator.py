@@ -4,7 +4,7 @@ import logging
 from datetime import timedelta
 from typing import Any
 
-from gaggiuino_api import GaggiuinoAPI
+from gaggiuino_api import GaggiuinoAPI, GaggiuinoProfile, GaggiuinoStatus
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import CONF_HOST
 from homeassistant.core import HomeAssistant
@@ -28,26 +28,42 @@ class GaggiuinoDataUpdateCoordinator(DataUpdateCoordinator):
         )
         self.api: GaggiuinoAPI = GaggiuinoAPI(base_url=entry.data[CONF_HOST])
         self.entry: ConfigEntry = entry
-        self.profile_id: int | None = None
+        self._status: GaggiuinoStatus | None = None
+        self._profile: GaggiuinoProfile | None = None
 
     async def _async_update_data(self) -> dict[str, Any]:
         """Update data via library."""
         try:
             async with self.api:
-                profiles = await self.api.get_profiles()
+                self._status = await self.api.get_status()
+                self._profile = self.api.profile
+                self._profiles = await self.api.get_profiles()
         except Exception as error:
+            self._status = None
+            self._profile = None
+            self._profiles = None
             raise UpdateFailed(error) from error
 
-        current_profile = None
-        if self.profile_id is not None:
-            current_profile = next(
-                (p for p in profiles if p.id == self.profile_id), None
-            )
         return {
-            "available": True,
-            "profiles": profiles,
-            "current_profile": current_profile,
+            "status": self._status,
+            "profile": self._profile,
+            "profiles": self._profiles,
         }
+
+    @property
+    def status(self) -> GaggiuinoStatus | None:
+        """Return the current status object."""
+        return self._status
+
+    @property
+    def profile(self) -> GaggiuinoProfile | None:
+        """Return the current profile object."""
+        return self._profile
+
+    @property
+    def profiles(self) -> list[GaggiuinoProfile] | None:
+        """Return the available profiles object."""
+        return self._profiles
 
     @property
     def device_info(self) -> dict[str, Any]:
@@ -59,20 +75,16 @@ class GaggiuinoDataUpdateCoordinator(DataUpdateCoordinator):
             "model": "Gaggiuino",
         }
 
-    async def select_profile(self, profile_id: int) -> None:
+    async def select_profile(self, profile: GaggiuinoProfile | int) -> None:
         """Select a new profile."""
-        if profile_id == self.profile_id:
-            return
-
-        profiles = self.data.get("profiles", [])
-        if not any(p.id == profile_id for p in profiles):
-            msg = f"Profile with ID {profile_id} not found"
-            raise ValueError(msg)
-
         try:
             async with self.api:
-                await self.api.select_profile(profile_id)
-            self.profile_id = profile_id
-            await self.async_refresh()
+                if await self.api.select_profile(profile):
+                    self.data["profile"] = self._profile = self.api.profile  # type: GaggiuinoProfile
+                    if self._status is not None:
+                        self._status.profileId = self._profile.id
+                        self._status.profileName = self._profile.name
+                        self.data["status"] = self._status
+
         except Exception as error:
             raise UpdateFailed(error) from error
