@@ -3,6 +3,8 @@
 [![Stand With Ukraine](https://raw.githubusercontent.com/vshymanskyy/StandWithUkraine/main/badges/StandWithUkraine.svg)](https://stand-with-ukraine.pp.ua)
 [![Russian Warship Go Fuck Yourself](https://raw.githubusercontent.com/vshymanskyy/StandWithUkraine/main/badges/RussianWarship.svg)](https://stand-with-ukraine.pp.ua)
 
+![](/media/GAGGIUINO_LOGO_transp.png)
+
 Home Assistant HACS Integration for Gaggiuino
 ---------------------------
 Repository: https://github.com/ALERTua/hass-gaggiuino
