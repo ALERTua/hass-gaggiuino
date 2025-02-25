@@ -18,36 +18,6 @@ dev = [
     "tox>=4.24.1",
 ]
 
-[tool.ruff]
-target-version = "py313"
-src = ["gaggiuino_api", "test"]
-extend-exclude = [".idea/"]
-extend-include = []
-output-format = "grouped"
-respect-gitignore = true
-
-[tool.ruff.lint]
-task-tags = ["TODO"]
-
-[tool.ruff.format]
-docstring-code-format = true
-docstring-code-line-length = 88
-quote-style = "preserve"
-
-[tool.ruff.lint.pycodestyle]
-max-doc-length = 88
-max-line-length = 120
-
-[tool.ruff.lint.pylint]
-max-args = 10
-max-branches = 15
-max-nested-blocks = 10
-max-positional-args = 3
-max-public-methods = 30
-
-[tool.ruff.lint.extend-per-file-ignores]
-"__init__.py" = ["E402"]
-
 [tool.pytest.ini_options]
 minversion = "8.3.4"
 addopts = "-ra -q"

@@ -5,7 +5,11 @@ from __future__ import annotations
 import logging
 from typing import TYPE_CHECKING
 
-from homeassistant.components.sensor import SensorEntity
+from homeassistant.components.binary_sensor import (
+    BinarySensorDeviceClass,
+    BinarySensorEntity,
+)
+from homeassistant.const import EntityCategory
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
 
 if TYPE_CHECKING:
@@ -27,22 +31,24 @@ async def async_setup_entry(
     from . import DOMAIN
 
     coordinator = hass.data[DOMAIN][config_entry.entry_id]
-    async_add_entities([APIAvailabilitySensor(coordinator)])
+    async_add_entities([GaggiuinoAvailabilitySensor(coordinator)])
 
 
-class APIAvailabilitySensor(CoordinatorEntity, SensorEntity):
+class GaggiuinoAvailabilitySensor(CoordinatorEntity, BinarySensorEntity):
     """Representation of the Gaggiuino API availability sensor."""
 
-    _attr_name = "Gaggiuino API Availability"
-    _attr_native_value = "unavailable"
-    _attr_entity_registry_enabled_default = True
+    _attr_name = "Gaggiuino"
+    _attr_translation_key = "availability"
+    _attr_device_class = BinarySensorDeviceClass.CONNECTIVITY
+    _attr_entity_category = EntityCategory.DIAGNOSTIC
 
     def __init__(self, coordinator: GaggiuinoDataUpdateCoordinator) -> None:
         """Initialize the sensor."""
         super().__init__(coordinator)
-        self._attr_unique_id = f"{coordinator.entry.entry_id}_api_availability"
+        self._attr_unique_id = f"{coordinator.entry.entry_id}_availability"
+        self._attr_device_info = coordinator.device_info
 
     @property
-    def native_value(self) -> str:
-        """Return the availability state."""
-        return "available" if self.coordinator.last_update_success else "unavailable"
+    def is_on(self) -> bool:
+        """Return true if the binary sensor is on."""
+        return self.coordinator.last_update_success

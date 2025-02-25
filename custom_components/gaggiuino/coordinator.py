@@ -49,6 +49,16 @@ class GaggiuinoDataUpdateCoordinator(DataUpdateCoordinator):
             "current_profile": current_profile,
         }
 
+    @property
+    def device_info(self) -> dict[str, Any]:
+        """Return device information about this entity."""
+        return {
+            "identifiers": {("gaggiuino", self.config_entry.entry_id)},
+            "name": "Gaggiuino",
+            "manufacturer": "Gaggiuino",
+            "model": "Gaggiuino",
+        }
+
     async def select_profile(self, profile_id: int) -> None:
         """Select a new profile."""
         if profile_id == self.profile_id:

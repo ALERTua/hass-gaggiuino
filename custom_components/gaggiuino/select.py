@@ -2,7 +2,8 @@
 
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, Any
+import logging
+from typing import TYPE_CHECKING
 
 from homeassistant.components.select import SelectEntity
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
@@ -14,6 +15,9 @@ if TYPE_CHECKING:
     from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
     from .coordinator import GaggiuinoDataUpdateCoordinator
+
+
+_LOGGER = logging.getLogger(__name__)
 
 
 async def async_setup_entry(
@@ -44,6 +48,7 @@ class GaggiuinoProfileSelect(CoordinatorEntity, SelectEntity):
         self._attr_icon = "mdi:coffee"
         self._attr_unique_id = f"{coordinator.entry.entry_id}_profile"
         self._attr_translation_key = "profile"
+        self._attr_device_info = coordinator.device_info
         self._profile_map: dict[str, int] = {}  # Maps display names to profile IDs
 
     def _update_profile_map(self) -> None:
@@ -83,13 +88,3 @@ class GaggiuinoProfileSelect(CoordinatorEntity, SelectEntity):
 
         profile_id = self._profile_map[option]
         await self.coordinator.select_profile(profile_id)
-
-    @property
-    def device_info(self) -> dict[str, Any]:
-        """Return device information about this entity."""
-        return {
-            "identifiers": {("gaggiuino", self.coordinator.config_entry.entry_id)},
-            "name": "Gaggiuino",
-            "manufacturer": "DIY",
-            "model": "Gaggiuino",
-        }
