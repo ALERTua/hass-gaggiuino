@@ -3,6 +3,12 @@
 [![Stand With Ukraine](https://raw.githubusercontent.com/vshymanskyy/StandWithUkraine/main/badges/StandWithUkraine.svg)](https://stand-with-ukraine.pp.ua)
 [![Russian Warship Go Fuck Yourself](https://raw.githubusercontent.com/vshymanskyy/StandWithUkraine/main/badges/RussianWarship.svg)](https://stand-with-ukraine.pp.ua)
 
+[![repo_url](https://img.shields.io/badge/GitHub-grey?logo=github&logoColor=white)](https://github.com/ALERTua/hass-gaggiuino)
+[![hacs_integration](https://img.shields.io/badge/HACS-Integration-blue.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=ALERTua&repository=hass-gaggiuino&category=Integration)
+[![Validate](https://github.com/ALERTua/hass-gaggiuino/actions/workflows/validate.yml/badge.svg)](https://github.com/ALERTua/hass-gaggiuino/actions/workflows/validate.yml)
+[![GitHub Release](https://img.shields.io/github/v/release/ALERTua/hass-gaggiuino)](https://github.com/ALERTua/hass-gaggiuino/releases)
+
+
 ![](/images/logo.png)
 
 Home Assistant HACS Integration for Gaggiuino
@@ -58,7 +64,7 @@ search for this integration, and select it.
 
 Integration setup complete. Your Gaggiuino is now available as a device.
 
-### Note: Currently no API Endpoint allows getting the currently selected profile. That's why the initial profile selection is empty. However, the selector selects the profile correctly.
+### Note: Currently, no API Endpoint allows getting the currently selected profile. That's why the initial profile selection is empty. However, the selector selects the profile correctly.
 
 ![img](/images/35_integration_entries.png)
 
