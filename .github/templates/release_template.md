@@ -1,17 +1,19 @@
 ![](/images/icon.png)
 
-# Release Notes
-
-## New Features
+### New Features ⚡
 - Feature 1: Description of feature 1.
 
-## Improvements
-- Improvement 1: Description of improvement 1.
+### Enhancements 🔥
+- Enhancement 1: Description of Enhancement 1.
 
-## Bug Fixes
-- Bug Fix 1: Description of bug fix 1.
+### Fixes 🔧
+- Fix 1: Description of bug fix 1.
 
-## Other Changes
+### Maintenance ⚙️
+- This
+- That
+
+### Other Changes
 - Other change 1: Description of other change 1.
 
 ## Important notes:
