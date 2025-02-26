@@ -10,7 +10,7 @@
   "iot_class": "local_polling",
   "issue_tracker": "https://github.com/ALERTua/hass-gaggiuino/issues",
   "requirements": [
-    "gaggiuino_api==0.1.3"
+    "gaggiuino_api==0.1.5"
   ],
-  "version": "2025.2.2"
+  "version": "2025.2.3"
 }
