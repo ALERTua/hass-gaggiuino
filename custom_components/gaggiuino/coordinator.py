@@ -37,15 +37,15 @@ class GaggiuinoDataUpdateCoordinator(DataUpdateCoordinator):
         try:
             async with self.api:
                 self._status = await self.api.get_status()
-                self._profile = self.api.profile
                 self._profiles = await self.api.get_profiles()
+                self._profile = self.api.profile
                 latest_shot_id_result = await self.api.get_latest_shot_id()
                 if latest_shot_id_result is not None:
                     self._latest_shot_id = latest_shot_id_result.lastShotId
         except Exception as error:
             self._status = None
-            self._profile = None
             self._profiles = None
+            self._profile = None
             self._latest_shot_id = None
             raise UpdateFailed(error) from error
 
