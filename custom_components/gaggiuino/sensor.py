@@ -58,11 +58,15 @@ SENSORS: tuple[GaggiuinoSensorEntityDescription, ...] = (
     GaggiuinoSensorEntityDescription(
         key="profile_id",
         name="Profile ID",
+        icon="mdi:coffee",
+        entity_category=EntityCategory.DIAGNOSTIC,
         value_fn=get_status_attr("profileId"),
     ),
     GaggiuinoSensorEntityDescription(
         key="profile_name",
         name="Profile Name",
+        icon="mdi:coffee",
+        entity_category=EntityCategory.DIAGNOSTIC,
         value_fn=get_status_attr("profileName"),
     ),
     GaggiuinoSensorEntityDescription(
