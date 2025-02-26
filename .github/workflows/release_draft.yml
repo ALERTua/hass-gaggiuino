@@ -26,7 +26,7 @@ jobs:
         with:
           tag_name: ${{ github.ref }}
           name: "${{ github.ref }} Release Draft:"
-          body_path: /.github/templates/release_template.md
+          body_path: .github/templates/release_template.md
           generate_release_notes: true
           append_body: true
           draft: true
