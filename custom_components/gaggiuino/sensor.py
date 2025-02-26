@@ -79,6 +79,7 @@ SENSORS: tuple[GaggiuinoSensorEntityDescription, ...] = (
     GaggiuinoSensorEntityDescription(
         key="target_temperature",
         name="Target Temperature",
+        icon="mdi:thermometer-high",
         device_class=SensorDeviceClass.TEMPERATURE,
         native_unit_of_measurement=UnitOfTemperature.CELSIUS,
         state_class=SensorStateClass.MEASUREMENT,
@@ -88,6 +89,7 @@ SENSORS: tuple[GaggiuinoSensorEntityDescription, ...] = (
     GaggiuinoSensorEntityDescription(
         key="temperature",
         name="Temperature",
+        icon="mdi:thermometer-water",
         device_class=SensorDeviceClass.TEMPERATURE,
         native_unit_of_measurement=UnitOfTemperature.CELSIUS,
         state_class=SensorStateClass.MEASUREMENT,
@@ -106,6 +108,7 @@ SENSORS: tuple[GaggiuinoSensorEntityDescription, ...] = (
     GaggiuinoSensorEntityDescription(
         key="water_level",
         name="Water Level",
+        icon="mdi:car-coolant-level",
         native_unit_of_measurement=PERCENTAGE,
         state_class=SensorStateClass.MEASUREMENT,
         value_fn=get_status_attr("waterLevel"),
