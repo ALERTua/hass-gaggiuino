@@ -30,6 +30,7 @@ class GaggiuinoDataUpdateCoordinator(DataUpdateCoordinator):
         self.entry: ConfigEntry = entry
         self._status: GaggiuinoStatus | None = None
         self._profile: GaggiuinoProfile | None = None
+        self._latest_shot_id: int | None = None
 
     async def _async_update_data(self) -> dict[str, Any]:
         """Update data via library."""
@@ -38,16 +39,21 @@ class GaggiuinoDataUpdateCoordinator(DataUpdateCoordinator):
                 self._status = await self.api.get_status()
                 self._profile = self.api.profile
                 self._profiles = await self.api.get_profiles()
+                latest_shot_id_result = await self.api.get_latest_shot_id()
+                if latest_shot_id_result is not None:
+                    self._latest_shot_id = latest_shot_id_result.lastShotId
         except Exception as error:
             self._status = None
             self._profile = None
             self._profiles = None
+            self._latest_shot_id = None
             raise UpdateFailed(error) from error
 
         return {
             "status": self._status,
             "profile": self._profile,
             "profiles": self._profiles,
+            "latest_shot_id": self._latest_shot_id,
         }
 
     @property
@@ -64,6 +70,11 @@ class GaggiuinoDataUpdateCoordinator(DataUpdateCoordinator):
     def profiles(self) -> list[GaggiuinoProfile] | None:
         """Return the available profiles object."""
         return self._profiles
+
+    @property
+    def latest_shot_id(self) -> list[GaggiuinoProfile] | None:
+        """Return the latest shot id."""
+        return self._latest_shot_id
 
     @property
     def device_info(self) -> dict[str, Any]:

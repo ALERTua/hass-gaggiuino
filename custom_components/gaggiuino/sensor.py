@@ -66,6 +66,13 @@ SENSORS: tuple[GaggiuinoSensorEntityDescription, ...] = (
         value_fn=get_status_attr("profileName"),
     ),
     GaggiuinoSensorEntityDescription(
+        key="latest_shot_id",
+        name="Latest Shot ID",
+        icon="mdi:coffee",
+        entity_category=EntityCategory.DIAGNOSTIC,
+        value_fn=lambda coordinator: coordinator.latest_shot_id,
+    ),
+    GaggiuinoSensorEntityDescription(
         key="target_temperature",
         name="Target Temperature",
         device_class=SensorDeviceClass.TEMPERATURE,
