@@ -87,3 +87,4 @@ class GaggiuinoProfileSelect(CoordinatorEntity, SelectEntity):
 
         profile_id = self._profile_map[option]
         await self.coordinator.select_profile(profile_id)
+        await self.coordinator.async_refresh()
