@@ -41,9 +41,9 @@ class BinarySensorEntityDescription(BinarySensorEntityDescription):
 
 BINARY_SENSORS = [
     BinarySensorEntityDescription(
-        key="availability",
-        name="Gaggiuino",
-        translation_key="availability",
+        key="connectivity",
+        name="Connectivity",
+        translation_key="connectivity",
         device_class=BinarySensorDeviceClass.CONNECTIVITY,
         entity_category=EntityCategory.DIAGNOSTIC,
         value_fn=lambda coordinator: coordinator.last_update_success,
