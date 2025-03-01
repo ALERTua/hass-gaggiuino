@@ -98,4 +98,5 @@ class GaggiuinoDataUpdateCoordinator(DataUpdateCoordinator):
                         self.data["status"] = self._status
 
         except Exception as error:
+            _LOGGER.exception("Exception while selecting a profile")
             raise UpdateFailed(error) from error
