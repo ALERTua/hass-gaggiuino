@@ -1,33 +1,15 @@
-name: Release Draft
+name: Release Drafter
 
 on:
-  workflow_dispatch:
   push:
-    tags:
-      - 'v*.*.*'
-
-permissions:
-  contents: write
-  discussions: write
+    branches:
+      - main
 
 jobs:
-  create-release:
+  update_release_draft:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Create Release
-        id: create_release
-        uses: softprops/action-gh-release@v2
+      - name: Update release draft
+        uses: release-drafter/release-drafter@v6
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: ${{ github.ref }}
-          name: '${{ github.ref }} Release Draft:'
-          body_path: .github/templates/release_template.md
-          generate_release_notes: true
-          append_body: true
-          draft: true
-          prerelease: true
