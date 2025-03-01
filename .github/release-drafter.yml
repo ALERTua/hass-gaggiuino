@@ -1,0 +1,84 @@
+name-template: 'v$NEXT_PATCH_VERSION'
+tag-template: 'v$NEXT_PATCH_VERSION'
+exclude-labels:
+  - 'Meta: Exclude From Changelog'
+  - 'auto-changelog'
+categories:
+  - title: '🚀 Features'
+    labels:
+      - 'feature'
+      - 'enhancement'
+  - title: '🐛 Bug Fixes'
+    labels:
+      - 'fix'
+      - 'bugfix'
+      - 'bug'
+  - title: '🧰 Maintenance'
+    label: 'chore'
+
+  - title: ":boom: Breaking Changes"
+    label: "breaking"
+  - title: ":rocket: Features"
+    label: "enhancement"
+  - title: ":fire: Removals and Deprecations"
+    label: "removal"
+  - title: ":beetle: Fixes"
+    label: "bug"
+  - title: ":racehorse: Performance"
+    label: "performance"
+  - title: ":rotating_light: Testing"
+    label: "testing"
+  - title: ":construction_worker: Continuous Integration"
+    label: "ci"
+  - title: ":books: Documentation"
+    label: "documentation"
+  - title: ":hammer: Refactoring"
+    label: "refactoring"
+  - title: ":lipstick: Style"
+    label: "style"
+  - title: ":package: Dependencies"
+    labels:
+      - "dependencies"
+      - "build"
+change-template: '- $TITLE @$AUTHOR (#$NUMBER)'
+change-title-escapes: '\<*_&' # You can add # and @ to disable mentions, and add ` to disable code blocks.
+version-resolver:
+  major:
+    labels:
+      - 'major'
+  minor:
+    labels:
+      - 'minor'
+  patch:
+    labels:
+      - 'patch'
+  default: patch
+template: |
+  ![](/images/icon.png)
+
+  ## What's changed
+  $CHANGES
+
+  ### New Features ⚡
+  - Feature 1: Description of feature 1.
+
+  ### Enhancements 🔥
+  - Enhancement 1: Description of Enhancement 1.
+
+  ### Fixes 🔧
+  - Fix 1: Description of bug fix 1.
+
+  ### Maintenance ⚙️
+  - This
+  - That
+
+  ### Other Changes
+  - Other change 1: Description of other change 1.
+
+  ## Important notes:
+  - Make sure your machine is on the latest firmware from https://github.com/Zer0-bit/gaggiuino/releases.
+  - The firmware that offers this API Endpoint has not yet been released. This release will be marked as the latest (not pre-release) as soon as the firmware is released.
+  - As of this moment, this API endpoint is supported only by a pre-release firmware from this [thread](https://discord.com/channels/890339612441063494/1343968769499992105/1343968895261872299)
+
+  ## Contributors to this release
+  $CONTRIBUTORS
