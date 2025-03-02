@@ -2,7 +2,7 @@
 
 import logging
 from datetime import timedelta
-from typing import Any
+from typing import Any, Final
 
 from gaggiuino_api import GaggiuinoAPI, GaggiuinoProfile, GaggiuinoStatus
 from homeassistant.config_entries import ConfigEntry
@@ -14,6 +14,8 @@ from .const import DOMAIN
 
 _LOGGER = logging.getLogger(__name__)
 
+UPDATE_INTERVAL: Final = timedelta(seconds=30)
+
 
 class GaggiuinoDataUpdateCoordinator(DataUpdateCoordinator):
     """Class to manage fetching Gaggiuino data."""
@@ -24,7 +26,7 @@ class GaggiuinoDataUpdateCoordinator(DataUpdateCoordinator):
             hass,
             _LOGGER,
             name=DOMAIN,
-            update_interval=timedelta(seconds=30),
+            update_interval=UPDATE_INTERVAL,
         )
         self.api: GaggiuinoAPI = GaggiuinoAPI(base_url=entry.data[CONF_HOST])
         self.entry: ConfigEntry = entry
