@@ -22,6 +22,7 @@ API Library:
 - Repository: https://github.com/ALERTua/gaggiuino_api
 
 ### Note: I always implement features from the latest Gaggiuino Releases. Please make sure your machine is on the latest firmware available.
+### Note: Home Assistant integrations have a fixed update period. This one is fixed at 30 seconds. Due to this long refresh period, the integration can not be used to monitor shots.
 
 ## Installation
 
@@ -69,3 +70,9 @@ Integration setup complete. Your Gaggiuino is now available as a device.
 ![img](/images/45_integration_device.png)
 
 ### Note: While the Gagguino Profile IDs are unique, their names are not, you can have multiple profiles with the same name, but their IDs will be different. The profile selection method calls for a profile ID to be provided, that's why I decided to visually represent the selector items as both Profile Names and their corresponding IDs. I know this is not very convenient in automation, but I am open to your ideas.
+
+Feel free to post your automations in https://github.com/ALERTua/hass-gaggiuino/discussions/categories/ideas
+
+I will gather the most valuable posts in a pinned one.
+
+❤️
