@@ -54,7 +54,7 @@ BINARY_SENSORS = [
         icon="mdi:water-pump",
         translation_key="brew_switch",
         device_class=BinarySensorDeviceClass.RUNNING,
-        value_fn=get_status_attr("brewSwitchState", lambda _: str(_).lower() == "true"),
+        value_fn=get_status_attr("brewSwitchState"),
     ),
     BinarySensorEntityDescription(
         key="steam_switch",
@@ -62,9 +62,7 @@ BINARY_SENSORS = [
         icon="mdi:water-pump",
         translation_key="steam_switch",
         device_class=BinarySensorDeviceClass.RUNNING,
-        value_fn=get_status_attr(
-            "steamSwitchState", lambda _: str(_).lower() == "true"
-        ),
+        value_fn=get_status_attr("steamSwitchState"),
     ),
 ]
 
