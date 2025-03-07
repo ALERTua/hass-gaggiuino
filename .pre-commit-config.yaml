@@ -22,7 +22,7 @@ repos:
 
 # https://docs.astral.sh/uv/guides/integration/pre-commit/
 - repo: https://github.com/astral-sh/uv-pre-commit
-  rev: 0.6.3
+  rev: 0.6.5
   hooks:
     - id: uv-lock
 
