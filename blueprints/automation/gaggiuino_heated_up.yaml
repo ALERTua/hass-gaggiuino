@@ -1,3 +1,4 @@
+---
 blueprint:
   name: Gaggiuino Heated Up Notification
   description: Notify when Gaggiuino is heated up
@@ -61,6 +62,7 @@ blueprint:
           filter:
             integration: mobile_app
 
+mode: single
 
 variables:
   target_temperature_entity_id: !input target_temperature
