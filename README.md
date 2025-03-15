@@ -26,7 +26,7 @@ API Library:
 # Table of Contents
 1. [Installation](#installation)
 2. [Troubleshooting](#faq--troubleshooting)
-3. [Blueprint Library](/blueprints/BLUEPRINTS.md)
+3. [Blueprint Library](/blueprints/README.md)
 
 ## Installation
 
