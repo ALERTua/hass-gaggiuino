@@ -8,10 +8,6 @@ Notifies when Gaggiuino Temperature reaches the Selected Profile Target Temperat
 
 * Create a dummy Gaggiuino profile with target temperature of 15°C
 * Name it "OFF", for example.
-* Take its full name from the integration Profile Selector. E.g. `OFF (ID: 7)`
+* Fill this profile name to the blueprint's `Gaggiuino OFF Profile Name` field
 
-![img.png](images/heat_up_1.png)
-
-* Fill this full profile name to the blueprint's `Gaggiuino OFF Profile Name` field
-
-![img_1.png](images/heat_up_2.png)
+![img_1.png](images/heat_up_1.png)

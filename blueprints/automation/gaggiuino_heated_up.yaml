@@ -7,7 +7,7 @@ blueprint:
     connectivity:
       name: Gaggiuino Connectivity Binary Sensor
       description: The binary sensor that indicates if Gaggiuino is connected.
-      default: sensor.gaggiuino_target_temperature
+      default: binary_sensor.gaggiuino_availability
       selector:
         entity:
           filter:
@@ -37,43 +37,50 @@ blueprint:
               integration: gaggiuino
               device_class: temperature
 
-    profile_selector:
-      name: Gaggiuino Profile Selector
-      description: The entity for the Gaggiuino Profile Selector
-      default: select.gaggiuino_profile
+    profile_name:
+      name: Gaggiuino Profile Name Sensor
+      description: The entity for the Gaggiuino Profile Name Sensor
+      default: sensor.gaggiuino_profile_name
       selector:
         entity:
           filter:
-            - domain: select
+            - domain: sensor
               integration: gaggiuino
 
     off_profile_name:
       name: Gaggiuino OFF Profile Name
-      description: "Gaggiuino 'OFF' Profile Name. Note that the format must match the select entity fields. E.g. 'OFF (ID: 1)'"
-      default: "OFF (ID: 1)"
+      description: "Gaggiuino 'OFF' Profile Name."
+      default: "OFF"
       selector:
         text:
 
     notify_device:
       name: Device to notify
-      description: Device needs to run the official Home Assistant app to receive notifications.
+      description: Device to send notification to
       selector:
         device:
-          filter:
-            integration: mobile_app
+          integration: mobile_app
+
 
 mode: single
 
+
 variables:
   target_temperature_entity_id: !input target_temperature
+  temperature_entity_id: !input temperature
+
+
+trigger_variables:
+  target_temperature_entity_id: !input target_temperature
+  temperature_entity_id: !input temperature
 
 
 triggers:
   - trigger: numeric_state
     entity_id: !input temperature
+    above: 0
     value_template: >-
-      {{ (state.attributes.value | default(0) | int) >=
-      (states(target_temperature_entity_id) | default(0) | int) }}
+      {{ states(target_temperature_entity_id) | float(0.0) - state.state | float(0.0) }}
 
 
 conditions:
@@ -88,12 +95,16 @@ conditions:
 
       - not:
           - condition: state
-            entity_id: !input profile_selector
+            entity_id: !input profile_name
             state: !input off_profile_name
 
 actions:
-  - alias: "Notify that Gaggiuino has heated up"
+  - action: system_log.write
+    data:
+      message: "Gaggiuino heated up to {{ states(target_temperature_entity_id) }}"
+      level: info
+
+  - device_id: !input notify_device
     domain: mobile_app
     type: notify
-    device_id: !input notify_device
     message: "Gaggiuino heated up to {{ states(target_temperature_entity_id) }}"
