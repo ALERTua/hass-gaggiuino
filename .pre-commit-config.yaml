@@ -7,14 +7,13 @@ repos:
     - id: check-builtin-literals
     - id: check-case-conflict
     - id: check-toml
-    - id: check-yaml
     - id: check-docstring-first
     - id: end-of-file-fixer
     - id: mixed-line-ending
     - id: trailing-whitespace
 
 - repo: https://github.com/astral-sh/ruff-pre-commit
-  rev: v0.9.10
+  rev: v0.11.0
   hooks:
     - id: ruff
       args: [ --fix ]
@@ -22,7 +21,7 @@ repos:
 
 # https://docs.astral.sh/uv/guides/integration/pre-commit/
 - repo: https://github.com/astral-sh/uv-pre-commit
-  rev: 0.6.5
+  rev: 0.6.6
   hooks:
     - id: uv-lock
 

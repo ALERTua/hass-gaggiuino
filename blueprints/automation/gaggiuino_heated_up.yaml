@@ -1,0 +1,97 @@
+blueprint:
+  name: Gaggiuino Heated Up Notification
+  description: Notify when Gaggiuino is heated up
+  domain: automation
+  input:
+    connectivity:
+      name: Gaggiuino Connectivity Binary Sensor
+      description: The binary sensor that indicates if Gaggiuino is connected.
+      default: sensor.gaggiuino_target_temperature
+      selector:
+        entity:
+          filter:
+            - domain: binary_sensor
+              integration: gaggiuino
+              device_class: connectivity
+
+    target_temperature:
+      name: Gaggiuino Target Temperature Sensor
+      description: The sensor for the Gaggiuino Target Temperarure
+      default: sensor.gaggiuino_target_temperature
+      selector:
+        entity:
+          filter:
+            - domain: sensor
+              integration: gaggiuino
+              device_class: temperature
+
+    temperature:
+      name: Gaggiuino Current Temperature Sensor
+      description: The sensor for the Gaggiuino Current Temperarure
+      default: sensor.gaggiuino_temperature
+      selector:
+        entity:
+          filter:
+            - domain: sensor
+              integration: gaggiuino
+              device_class: temperature
+
+    profile_selector:
+      name: Gaggiuino Profile Selector
+      description: The entity for the Gaggiuino Profile Selector
+      default: select.gaggiuino_profile
+      selector:
+        entity:
+          filter:
+            - domain: select
+              integration: gaggiuino
+
+    off_profile_name:
+      name: Gaggiuino OFF Profile Name
+      description: "Gaggiuino 'OFF' Profile Name. Note that the format must match the select entity fields. E.g. 'OFF (ID: 1)'"
+      default: "OFF (ID: 1)"
+      selector:
+        text:
+
+    notify_device:
+      name: Device to notify
+      description: Device needs to run the official Home Assistant app to receive notifications.
+      selector:
+        device:
+          filter:
+            integration: mobile_app
+
+
+variables:
+  target_temperature_entity_id: !input target_temperature
+
+
+triggers:
+  - trigger: numeric_state
+    entity_id: !input temperature
+    value_template: >-
+      {{ (state.attributes.value | default(0) | int) >=
+      (states(target_temperature_entity_id) | default(0) | int) }}
+
+
+conditions:
+  - and:
+      - condition: state
+        entity_id: !input connectivity
+        state: "on"
+
+      - condition: template
+        value_template: >-
+          {{ now() > state_attr(this.entity_id,'last_triggered') + timedelta(hours=1) }}
+
+      - not:
+          - condition: state
+            entity_id: !input profile_selector
+            state: !input off_profile_name
+
+actions:
+  - alias: "Notify that Gaggiuino has heated up"
+    domain: mobile_app
+    type: notify
+    device_id: !input notify_device
+    message: "Gaggiuino heated up to {{ states(target_temperature_entity_id) }}"
