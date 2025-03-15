@@ -23,8 +23,10 @@ API Library:
 - PyPi: https://pypi.org/project/gaggiuino_api/
 - Repository: https://github.com/ALERTua/gaggiuino_api
 
-### Note: I always implement features from the latest Gaggiuino Releases. Please make sure your machine is on the latest firmware available.
-### Note: Home Assistant integrations have a fixed update period. This one is fixed at 30 seconds. Due to this long refresh period, the integration can not be used to monitor shots.
+# Table of Contents
+1. [Installation](#installation)
+2. [Troubleshooting](#faq--troubleshooting)
+3. [Blueprint Library](/blueprints/BLUEPRINTS.md)
 
 ## Installation
 
@@ -71,7 +73,25 @@ Integration setup complete. Your Gaggiuino is now available as a device.
 
 ![img](/images/45_integration_device.png)
 
-### Note: While the Gagguino Profile IDs are unique, their names are not, you can have multiple profiles with the same name, but their IDs will be different. The profile selection method calls for a profile ID to be provided, that's why I decided to visually represent the selector items as both Profile Names and their corresponding IDs. I know this is not very convenient in automation, but I am open to your ideas.
+## FAQ / Troubleshooting
+
+**Q: `ERROR (MainThread) [custom_components.gaggiuino.coordinator] Error fetching gaggiuino data: Unhandled exception`**
+
+**A:** Make sure you are on the latest firmware; make sure API Endpoints are available for Home Assistant.
+E.g. http://gaggiuino.local/api/system/status
+
+
+**Q: The states get updated only this frequently.**
+
+**A:** Home Assistant integrations have a fixed update period. This one is fixed at 30 seconds. Due to this long refresh period, the integration can not be used to monitor shots.
+
+
+**Q: Why do the profiles have their IDs in the Profile Selector?**
+
+**A:** While the Gagguino Profile IDs are unique, their names are not, you can have multiple profiles with the same name, but their IDs will be different. The profile selection method calls for a profile ID to be provided, that's why I decided to visually represent the selector items as both Profile Names and their corresponding IDs. I know this is not very convenient in automation, but I am open to your ideas.
+
+#### Note: I always implement features from the latest Gaggiuino Releases. Please make sure your machine is on the latest firmware available.
+
 
 Feel free to post your automations in https://github.com/ALERTua/hass-gaggiuino/discussions/categories/ideas
 
