@@ -17,6 +17,8 @@ Repository: https://github.com/ALERTua/hass-gaggiuino
 
 Gaggiuino Repository: https://github.com/Zer0-bit/gaggiuino/releases
 
+Blueprints Readme: [link](/blueprints/BLUEPRINTS.md)
+
 API Library:
 - PyPi: https://pypi.org/project/gaggiuino_api/
 - Repository: https://github.com/ALERTua/gaggiuino_api
