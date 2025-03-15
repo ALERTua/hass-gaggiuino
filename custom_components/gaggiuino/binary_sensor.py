@@ -42,25 +42,25 @@ class BinarySensorEntityDescription(BinarySensorEntityDescription):
 BINARY_SENSORS = [
     BinarySensorEntityDescription(
         key="availability",
-        name="Gaggiuino",
         translation_key="availability",
+        name="Availability",
         device_class=BinarySensorDeviceClass.CONNECTIVITY,
         entity_category=EntityCategory.DIAGNOSTIC,
         value_fn=lambda coordinator: coordinator.last_update_success,
     ),
     BinarySensorEntityDescription(
         key="brew_switch",
+        translation_key="brew_switch",
         name="Brew Switch",
         icon="mdi:water-pump",
-        translation_key="brew_switch",
         device_class=BinarySensorDeviceClass.RUNNING,
         value_fn=get_status_attr("brewSwitchState"),
     ),
     BinarySensorEntityDescription(
         key="steam_switch",
+        translation_key="steam_switch",
         name="Steam Switch",
         icon="mdi:water-pump",
-        translation_key="steam_switch",
         device_class=BinarySensorDeviceClass.RUNNING,
         value_fn=get_status_attr("steamSwitchState"),
     ),
@@ -88,7 +88,6 @@ async def async_setup_entry(
 class GaggiuinoBinarySensor(CoordinatorEntity, BinarySensorEntity):
     """Representation of a Gaggiuino binary sensor."""
 
-    _attr_has_entity_name = True
     entity_description: BinarySensorEntityDescription
 
     def __init__(
@@ -101,6 +100,9 @@ class GaggiuinoBinarySensor(CoordinatorEntity, BinarySensorEntity):
         self.entity_description = description
         self._attr_unique_id = f"{coordinator.entry.entry_id}_{description.key}"
         self._attr_name = description.name
+        self._attr_has_entity_name = True
+        self._attr_translation_key = description.translation_key
+        self._attr_icon = description.icon
         self._attr_device_class = description.device_class
         self._attr_entity_category = description.entity_category
         self._attr_device_info = coordinator.device_info

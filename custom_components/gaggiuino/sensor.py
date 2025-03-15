@@ -47,6 +47,7 @@ class GaggiuinoSensorEntityDescription(SensorEntityDescription):
 SENSORS: tuple[GaggiuinoSensorEntityDescription, ...] = (
     GaggiuinoSensorEntityDescription(
         key="uptime",
+        translation_key="uptime",
         name="Uptime",
         device_class=SensorDeviceClass.DURATION,
         native_unit_of_measurement=UnitOfTime.SECONDS,
@@ -57,6 +58,7 @@ SENSORS: tuple[GaggiuinoSensorEntityDescription, ...] = (
     ),
     GaggiuinoSensorEntityDescription(
         key="profile_id",
+        translation_key="profile_id",
         name="Profile ID",
         icon="mdi:coffee",
         entity_category=EntityCategory.DIAGNOSTIC,
@@ -64,6 +66,7 @@ SENSORS: tuple[GaggiuinoSensorEntityDescription, ...] = (
     ),
     GaggiuinoSensorEntityDescription(
         key="profile_name",
+        translation_key="profile_Name",
         name="Profile Name",
         icon="mdi:coffee",
         entity_category=EntityCategory.DIAGNOSTIC,
@@ -71,13 +74,16 @@ SENSORS: tuple[GaggiuinoSensorEntityDescription, ...] = (
     ),
     GaggiuinoSensorEntityDescription(
         key="latest_shot_id",
+        translation_key="latest_shot_id",
         name="Latest Shot ID",
         icon="mdi:coffee",
+        entity_registry_enabled_default=False,
         entity_category=EntityCategory.DIAGNOSTIC,
         value_fn=lambda coordinator: coordinator.latest_shot_id,
     ),
     GaggiuinoSensorEntityDescription(
         key="target_temperature",
+        translation_key="target_temperature",
         name="Target Temperature",
         icon="mdi:thermometer-high",
         device_class=SensorDeviceClass.TEMPERATURE,
@@ -88,6 +94,7 @@ SENSORS: tuple[GaggiuinoSensorEntityDescription, ...] = (
     ),
     GaggiuinoSensorEntityDescription(
         key="temperature",
+        translation_key="temperature",
         name="Temperature",
         icon="mdi:thermometer-water",
         device_class=SensorDeviceClass.TEMPERATURE,
@@ -98,6 +105,7 @@ SENSORS: tuple[GaggiuinoSensorEntityDescription, ...] = (
     ),
     GaggiuinoSensorEntityDescription(
         key="pressure",
+        translation_key="pressure",
         name="Pressure",
         device_class=SensorDeviceClass.PRESSURE,
         native_unit_of_measurement=UnitOfPressure.BAR,
@@ -107,6 +115,7 @@ SENSORS: tuple[GaggiuinoSensorEntityDescription, ...] = (
     ),
     GaggiuinoSensorEntityDescription(
         key="water_level",
+        translation_key="water_level",
         name="Water Level",
         icon="mdi:car-coolant-level",
         native_unit_of_measurement=PERCENTAGE,
@@ -115,6 +124,7 @@ SENSORS: tuple[GaggiuinoSensorEntityDescription, ...] = (
     ),
     GaggiuinoSensorEntityDescription(
         key="weight",
+        translation_key="weight",
         name="Weight",
         device_class=SensorDeviceClass.WEIGHT,
         native_unit_of_measurement=UnitOfMass.GRAMS,
@@ -154,7 +164,13 @@ class GaggiuinoSensor(CoordinatorEntity, SensorEntity):
         super().__init__(coordinator)
         self.entity_description = description
         self._attr_unique_id = f"{coordinator.entry.entry_id}_{description.key}"
+        self._attr_name = description.name
+        self._attr_has_entity_name = True
+        self._attr_translation_key = description.translation_key
+        self._attr_icon = description.icon
         self._attr_device_info = coordinator.device_info
+        self._attr_device_class = description.device_class
+        self._attr_entity_category = description.entity_category
 
     @property
     def native_value(self) -> str | int | float | None:
