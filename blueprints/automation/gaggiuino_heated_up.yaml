@@ -76,11 +76,9 @@ trigger_variables:
 
 
 triggers:
-  - trigger: numeric_state
-    entity_id: !input temperature
-    above: 0
+  - trigger: template
     value_template: >-
-      {{ states(target_temperature_entity_id) | float(0.0) - state.state | float(0.0) }}
+      {{ (states(target_temperature_entity_id) | float(0.0) - states(temperature_entity_id) | float(0.0)) >= 0 }}
 
 
 conditions:
