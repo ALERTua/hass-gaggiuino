@@ -101,10 +101,10 @@ conditions:
 actions:
   - action: system_log.write
     data:
-      message: "Gaggiuino heated up to {{ states(target_temperature_entity_id) }}"
+      message: "Gaggiuino heated up to {{ states(temperature_entity_id) }}"
       level: info
 
   - device_id: !input notify_device
     domain: mobile_app
     type: notify
-    message: "Gaggiuino heated up to {{ states(target_temperature_entity_id) }}"
+    message: "Gaggiuino heated up to {{ states(temperature_entity_id) }}"
