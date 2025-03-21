@@ -92,6 +92,7 @@ E.g. http://gaggiuino.local/api/system/status
 
 #### Note: I always implement features from the latest Gaggiuino Releases. Please make sure your machine is on the latest firmware available.
 
+You can always find me on the official Gaggiuino Discord.
 
 Feel free to post your automations in https://github.com/ALERTua/hass-gaggiuino/discussions/categories/ideas
 
