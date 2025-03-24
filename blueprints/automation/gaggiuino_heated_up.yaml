@@ -93,7 +93,7 @@ conditions:
 
       - condition: template
         value_template: >-
-          {{ now() > state_attr(this.entity_id,'last_triggered') + timedelta(hours=1) }}
+          {{ now() > state_attr(this.entity_id,'last_triggered') + timedelta(minutes=5) }}
 
       - not:
           - condition: state
