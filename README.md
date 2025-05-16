@@ -89,6 +89,13 @@ E.g. http://gaggiuino.local/api/system/status
 **Q: Why do the profiles have their IDs in the Profile Selector?**
 
 **A:** While the Gagguino Profile IDs are unique, their names are not, you can have multiple profiles with the same name, but their IDs will be different. The profile selection method calls for a profile ID to be provided, that's why I decided to visually represent the selector items as both Profile Names and their corresponding IDs. I know this is not very convenient in automation, but I am open to your ideas.
+```yaml
+action: select.select_option
+target:
+  entity_id: select.gaggiuino_profile
+data:
+  option: "OFF (ID: 7)"
+```
 
 #### Note: I always implement features from the latest Gaggiuino Releases. Please make sure your machine is on the latest firmware available.
 
