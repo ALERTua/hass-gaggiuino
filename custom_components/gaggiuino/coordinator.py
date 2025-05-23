@@ -6,7 +6,12 @@ import logging
 from datetime import timedelta
 from typing import TYPE_CHECKING, Any, Final
 
-from gaggiuino_api import GaggiuinoAPI, GaggiuinoProfile, GaggiuinoStatus
+from gaggiuino_api import (
+    GaggiuinoAPI,
+    GaggiuinoConnectionTimeoutError,
+    GaggiuinoProfile,
+    GaggiuinoStatus,
+)
 from homeassistant.const import CONF_HOST
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
 
@@ -36,10 +41,13 @@ class GaggiuinoDataUpdateCoordinator(DataUpdateCoordinator):
         self.entry: ConfigEntry = entry
         self._status: GaggiuinoStatus | None = None
         self._profile: GaggiuinoProfile | None = None
+        self._profiles: list[GaggiuinoProfile] | None = None
         self._latest_shot_id: int | None = None
+        self.gaggiuino_online = False
 
-    async def _async_update_data(self) -> dict[str, Any]:
+    async def _async_update_data(self) -> dict[str, Any] | None:
         """Update data via library."""
+        _LOGGER.debug("Gaggiuino _async_update_data")
         try:
             async with self.api:
                 self._status = await self.api.get_status()
@@ -48,12 +56,32 @@ class GaggiuinoDataUpdateCoordinator(DataUpdateCoordinator):
                 latest_shot_id_result = await self.api.get_latest_shot_id()
                 if latest_shot_id_result is not None:
                     self._latest_shot_id = latest_shot_id_result.lastShotId
-        except Exception as error:
+                self.gaggiuino_online = True
+        except GaggiuinoConnectionTimeoutError:
+            _LOGGER.debug(
+                "Gaggiuino _async_update_data GaggiuinoConnectionTimeoutError"
+            )
+
+            # this sets all entities to unavailable while disconnected
+            # self._status = None  # noqa: ERA001
+            # self._profiles = None  # noqa: ERA001
+            # self._profile = None  # noqa: ERA001
+            # self._latest_shot_id = None  # noqa: ERA001
+
+            self.gaggiuino_online = False
+
+            # this sets all entities to unknown
+            # raise UpdateFailed(
+            #     "GaggiuinoConnectionTimeoutError"
+            # ) from err
+        except Exception as err:
             self._status = None
             self._profiles = None
             self._profile = None
             self._latest_shot_id = None
-            raise UpdateFailed(error) from error
+            self.gaggiuino_online = False
+            _LOGGER.debug("Error on _async_update_data: %s", err)
+            raise UpdateFailed(err) from err
 
         return {
             "status": self._status,
@@ -102,7 +130,9 @@ class GaggiuinoDataUpdateCoordinator(DataUpdateCoordinator):
                         self._status.profileId = self._profile.id
                         self._status.profileName = self._profile.name
                         self.data["status"] = self._status
-
-        except Exception as error:
+        except GaggiuinoConnectionTimeoutError:
+            _LOGGER.exception("Timeout setting profile")
+            return
+        except Exception as err:
             _LOGGER.exception("Exception while selecting a profile")
-            raise UpdateFailed(error) from error
+            raise UpdateFailed(err) from err

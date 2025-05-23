@@ -9,13 +9,12 @@ if TYPE_CHECKING:
 
 
 def get_status_attr(
-    attr_name: str,
+    attr_name: str = "",
     transform_fn: Callable[[Any], Any] | None = None,
 ) -> Callable[[Any], Any]:
     """Create a function to safely get and optionally transform status attributes."""
 
     def get_value(coordinator: Any) -> Any:
-        status = None
         if (
             coordinator.data is None
             or (status := coordinator.data.get("status", None)) is None
