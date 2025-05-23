@@ -1,25 +1,25 @@
 [project]
 name = "hass-gaggiuino"
-version = "2025.3.3"  # Do not forget to change this in the manifest.json
+version = "2025.5.1"  # Do not forget to change this in the manifest.json
 description = "Home Assistant HACS Integration for Gagggiuino"
 readme = "README.md"
-requires-python = ">=3.13"
+requires-python = ">=3.13.2"
 dependencies = [  # Do not forget to change this in the manifest.json
-    "gaggiuino-api==0.1.10",
+    "gaggiuino-api==0.1.11",
 ]
 
 [dependency-groups]
 dev = [
-    "homeassistant>=2025.2.5",
-    "pre-commit>=4.1.0",
-    "pytest>=8.3.4",
-    "pytest-asyncio>=0.25.3",
-    "ruff>=0.9.7",
-    "tox>=4.24.1",
+    "homeassistant>=2025.5.2",
+    "pre-commit>=4.2.0",
+    "pytest>=8.3.5",
+    "pytest-asyncio>=0.26.0",
+    "ruff>=0.11.11",
+    "tox>=4.26.0",
 ]
 
 [tool.pytest.ini_options]
-minversion = "8.3.4"
+minversion = "8.3.5"
 addopts = "-ra -q"
 asyncio_mode = "auto"
 asyncio_default_fixture_loop_scope = "session"

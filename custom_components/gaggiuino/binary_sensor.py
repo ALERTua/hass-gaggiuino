@@ -46,7 +46,7 @@ BINARY_SENSORS = [
         name="Availability",
         device_class=BinarySensorDeviceClass.CONNECTIVITY,
         entity_category=EntityCategory.DIAGNOSTIC,
-        value_fn=lambda coordinator: coordinator.last_update_success,
+        value_fn=lambda coordinator: coordinator.gaggiuino_online,
     ),
     BinarySensorEntityDescription(
         key="brew_switch",
