@@ -109,6 +109,7 @@ SENSORS: tuple[GaggiuinoSensorEntityDescription, ...] = (
         name="Pressure",
         device_class=SensorDeviceClass.PRESSURE,
         native_unit_of_measurement=UnitOfPressure.BAR,
+        entity_registry_enabled_default=False,
         state_class=SensorStateClass.MEASUREMENT,
         value_fn=get_status_attr("pressure"),
         suggested_display_precision=1,
