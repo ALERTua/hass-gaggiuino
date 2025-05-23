@@ -129,6 +129,7 @@ SENSORS: tuple[GaggiuinoSensorEntityDescription, ...] = (
         name="Weight",
         device_class=SensorDeviceClass.WEIGHT,
         native_unit_of_measurement=UnitOfMass.GRAMS,
+        entity_registry_enabled_default=False,
         state_class=SensorStateClass.MEASUREMENT,
         value_fn=get_status_attr("weight"),
         suggested_display_precision=2,
