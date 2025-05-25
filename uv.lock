@@ -770,7 +770,7 @@ wheels = [
 
 [[package]]
 name = "hass-gaggiuino"
-version = "2025.5.1"
+version = "2025.5.2"
 source = { virtual = "." }
 dependencies = [
     { name = "gaggiuino-api" },
