@@ -5,7 +5,7 @@ description = "Home Assistant HACS Integration for Gagggiuino"
 readme = "README.md"
 requires-python = ">=3.13.2"
 dependencies = [  # Do not forget to change this in the manifest.json
-    "gaggiuino-api==0.1.11",
+    "gaggiuino-api==0.1.12",
 ]
 
 [dependency-groups]
