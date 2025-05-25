@@ -8,6 +8,7 @@ from typing import TYPE_CHECKING, Any, Final
 
 from gaggiuino_api import (
     GaggiuinoAPI,
+    GaggiuinoConnectionError,
     GaggiuinoConnectionTimeoutError,
     GaggiuinoProfile,
     GaggiuinoStatus,
@@ -57,10 +58,8 @@ class GaggiuinoDataUpdateCoordinator(DataUpdateCoordinator):
                 if latest_shot_id_result is not None:
                     self._latest_shot_id = latest_shot_id_result.lastShotId
                 self.gaggiuino_online = True
-        except GaggiuinoConnectionTimeoutError:
-            _LOGGER.debug(
-                "Gaggiuino _async_update_data GaggiuinoConnectionTimeoutError"
-            )
+        except (GaggiuinoConnectionTimeoutError, GaggiuinoConnectionError) as err:
+            _LOGGER.debug("Gaggiuino _async_update_data %s", type(err))
 
             # this sets all entities to unavailable while disconnected
             # self._status = None  # noqa: ERA001
@@ -80,7 +79,7 @@ class GaggiuinoDataUpdateCoordinator(DataUpdateCoordinator):
             self._profile = None
             self._latest_shot_id = None
             self.gaggiuino_online = False
-            _LOGGER.debug("Error on _async_update_data: %s", err)
+            _LOGGER.debug("Error on _async_update_data: %s %s", type(err), err)
             raise UpdateFailed(err) from err
 
         return {
