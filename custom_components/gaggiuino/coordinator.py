@@ -135,3 +135,12 @@ class GaggiuinoDataUpdateCoordinator(DataUpdateCoordinator):
         except Exception as err:
             _LOGGER.exception("Exception while selecting a profile")
             raise UpdateFailed(err) from err
+
+    async def health_ok(self) -> bool:
+        """Return health ok boolean."""
+        try:
+            async with self.api:
+                return await self.api.healthy()
+        except Exception as err:
+            _LOGGER.debug("Exception while checking health: %s", type(err))
+            return False
