@@ -58,6 +58,7 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                 data = {
                     CONF_HOST: user_input[CONF_HOST],
                 }
+                # noinspection PyTypeChecker
                 return self.async_create_entry(title=info["title"], data=data)
             except CannotConnectError:
                 _LOGGER.exception("CannotConnectError")
@@ -69,6 +70,7 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         if errors:
             _LOGGER.debug("config flow async_step_user errors: %s", errors)
 
+        # noinspection PyTypeChecker
         return self.async_show_form(
             step_id="user", data_schema=STEP_USER_DATA_SCHEMA, errors=errors
         )
