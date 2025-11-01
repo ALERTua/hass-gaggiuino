@@ -32,12 +32,12 @@ async def validate_input(data: dict[str, Any]) -> dict[str, Any]:
     api = GaggiuinoAPI(base_url=data[CONF_HOST])
     try:
         async with api:
-            profiles = await api.get_profiles()
+            await api.get_profiles()
     except Exception as err:
         _LOGGER.exception("Error on validate_input")
         raise CannotConnectError from err
 
-    return {"title": f"{DOMAIN} ({data[CONF_HOST]})", "profiles": profiles}
+    return {"title": f"{DOMAIN} ({data[CONF_HOST]})"}
 
 
 class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
