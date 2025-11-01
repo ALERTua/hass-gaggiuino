@@ -23,6 +23,7 @@ from homeassistant.const import (
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
 
 from .common import get_status_attr
+from .const import DOMAIN
 
 if TYPE_CHECKING:
     from collections.abc import Callable
@@ -143,8 +144,6 @@ async def async_setup_entry(
     async_add_entities: AddEntitiesCallback,
 ) -> None:
     """Set up the Gaggiuino sensors."""
-    from . import DOMAIN
-
     coordinator = hass.data[DOMAIN][config_entry.entry_id]
 
     entities = [GaggiuinoSensor(coordinator, description) for description in SENSORS]
