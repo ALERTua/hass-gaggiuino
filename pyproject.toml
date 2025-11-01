@@ -3,14 +3,14 @@ name = "hass-gaggiuino"
 version = "2025.5.2"  # Do not forget to change this in the manifest.json
 description = "Home Assistant HACS Integration for Gagggiuino"
 readme = "README.md"
-requires-python = ">=3.13.2"
+requires-python = ">=3.13.2"  # follows https://github.com/home-assistant/core/blob/dev/pyproject.toml#L25
 dependencies = [  # Do not forget to change this in the manifest.json
     "gaggiuino-api==0.1.12",
 ]
 
 [dependency-groups]
 dev = [
-    "homeassistant>=2025.5.2",
+    "homeassistant>=2025.10.4",
     "pre-commit>=4.2.0",
     "pytest>=8.3.5",
     "pytest-asyncio>=0.26.0",
