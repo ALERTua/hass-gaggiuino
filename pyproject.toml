@@ -10,13 +10,12 @@ dependencies = [  # Do not forget to change this in the manifest.json
 
 [dependency-groups]
 dev = [
-    "homeassistant>=2025.10.4",
-    "pre-commit>=4.2.0",
-    "pytest>=8.3.5",
-    "pytest-asyncio>=0.26.0",
-    "ruff>=0.11.11",
-    "tox>=4.26.0",
+    "homeassistant>=2025.12.5",
+    "pytest-asyncio",
 ]
+
+[tool.setuptools]
+packages = ["custom_components.gaggiuino"]
 
 [tool.pytest.ini_options]
 minversion = "8.3.5"
