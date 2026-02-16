@@ -55,7 +55,7 @@ BINARY_SENSORS = [
         name="Health",
         device_class=BinarySensorDeviceClass.PROBLEM,
         entity_category=EntityCategory.DIAGNOSTIC,
-        value_fn=lambda coordinator: not coordinator.health_ok(),
+        value_fn=lambda coordinator: not coordinator.healthy,
     ),
     BinarySensorEntityDescription(
         key="brew_switch",

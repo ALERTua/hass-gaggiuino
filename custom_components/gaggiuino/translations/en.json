@@ -15,5 +15,94 @@
         "abort": {
             "already_configured": "Device is already configured"
         }
+    },
+    "entity": {
+        "sensor": {
+            "uptime": {
+                "name": "Uptime"
+            },
+            "profile_id": {
+                "name": "Profile ID"
+            },
+            "profile_Name": {
+                "name": "Profile Name"
+            },
+            "latest_shot_id": {
+                "name": "Latest Shot ID"
+            },
+            "target_temperature": {
+                "name": "Target Temperature"
+            },
+            "temperature": {
+                "name": "Temperature"
+            },
+            "pressure": {
+                "name": "Pressure"
+            },
+            "water_level": {
+                "name": "Water Level"
+            },
+            "weight": {
+                "name": "Weight"
+            },
+            "core_version": {
+                "name": "Core Version"
+            },
+            "front_version": {
+                "name": "Frontend Version"
+            },
+            "static_version": {
+                "name": "Static Version"
+            },
+            "firmware_status": {
+                "name": "Firmware Status"
+            }
+        },
+        "binary_sensor": {
+            "availability": {
+                "name": "Availability"
+            },
+            "health": {
+                "name": "Health"
+            },
+            "brew_switch": {
+                "name": "Brew Switch"
+            },
+            "steam_switch": {
+                "name": "Steam Switch"
+            }
+        },
+        "select": {
+            "profile": {
+                "name": "Profile"
+            },
+            "release_channel": {
+                "name": "Release Channel"
+            }
+        },
+        "number": {
+            "steam_set_point": {
+                "name": "Steam"
+            }
+        },
+        "switch": {
+            "led_disco": {
+                "name": "LED Disco"
+            },
+            "force_predictive": {
+                "name": "Force Predictive Scales"
+            },
+            "hw_scales_enabled": {
+                "name": "Hardware Scales"
+            },
+            "bt_scales_enabled": {
+                "name": "Bluetooth Scales"
+            }
+        },
+        "light": {
+            "led": {
+                "name": "LED"
+            }
+        }
     }
 }

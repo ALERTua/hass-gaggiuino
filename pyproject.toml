@@ -10,7 +10,7 @@ dependencies = [  # Do not forget to change this in the manifest.json
 
 [dependency-groups]
 dev = [
-    "homeassistant>=2026.2.2",
+    "homeassistant>=2025.5.1",
     "pytest-asyncio",
 ]
 
