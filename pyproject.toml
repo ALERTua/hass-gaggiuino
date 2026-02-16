@@ -1,6 +1,6 @@
 [project]
 name = "hass-gaggiuino"
-version = "2025.5.2"  # Do not forget to change this in the manifest.json
+version = "2026.2.1"  # Do not forget to change this in the manifest.json
 description = "Home Assistant HACS Integration for Gagggiuino"
 readme = "README.md"
 requires-python = ">=3.14.2"  # follows https://github.com/home-assistant/core/blob/dev/pyproject.toml#L25
