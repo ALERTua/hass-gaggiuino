@@ -135,6 +135,40 @@ SENSORS: tuple[GaggiuinoSensorEntityDescription, ...] = (
         value_fn=get_status_attr("weight"),
         suggested_display_precision=2,
     ),
+    # Version sensors (diagnostic)
+    GaggiuinoSensorEntityDescription(
+        key="core_version",
+        translation_key="core_version",
+        name="Core Version",
+        icon="mdi:identifier",
+        entity_category=EntityCategory.DIAGNOSTIC,
+        entity_registry_enabled_default=False,
+        value_fn=lambda coordinator: (
+            coordinator.versions.coreVersion if coordinator.versions else None
+        ),
+    ),
+    GaggiuinoSensorEntityDescription(
+        key="front_version",
+        translation_key="front_version",
+        name="Frontend Version",
+        icon="mdi:identifier",
+        entity_category=EntityCategory.DIAGNOSTIC,
+        entity_registry_enabled_default=False,
+        value_fn=lambda coordinator: (
+            coordinator.versions.frontVersion if coordinator.versions else None
+        ),
+    ),
+    GaggiuinoSensorEntityDescription(
+        key="static_version",
+        translation_key="static_version",
+        name="Static Version",
+        icon="mdi:identifier",
+        entity_category=EntityCategory.DIAGNOSTIC,
+        entity_registry_enabled_default=False,
+        value_fn=lambda coordinator: (
+            coordinator.versions.staticVersion if coordinator.versions else None
+        ),
+    ),
 )
 
 
@@ -147,6 +181,7 @@ async def async_setup_entry(
     coordinator = hass.data[DOMAIN][config_entry.entry_id]
 
     entities = [GaggiuinoSensor(coordinator, description) for description in SENSORS]
+    entities.append(GaggiuinoFirmwareStatusSensor(coordinator))
 
     async_add_entities(entities)
 
@@ -177,3 +212,38 @@ class GaggiuinoSensor(CoordinatorEntity, SensorEntity):
     def native_value(self) -> str | int | float | None:
         """Return the state of the sensor."""
         return self.entity_description.value_fn(self.coordinator)
+
+
+class GaggiuinoFirmwareStatusSensor(CoordinatorEntity, SensorEntity):
+    """Representation of a Gaggiuino firmware status sensor."""
+
+    def __init__(self, coordinator: GaggiuinoDataUpdateCoordinator) -> None:
+        """Initialize the sensor."""
+        super().__init__(coordinator)
+        self._attr_unique_id = f"{coordinator.entry.entry_id}_firmware_status"
+        self._attr_name = "Firmware Status"
+        self._attr_has_entity_name = True
+        self._attr_translation_key = "firmware_status"
+        self._attr_icon = "mdi:update"
+        self._attr_device_info = coordinator.device_info
+        self._attr_entity_category = EntityCategory.DIAGNOSTIC
+        self._attr_entity_registry_enabled_default = False
+
+    @property
+    def native_value(self) -> str | None:
+        """Return the state of the sensor."""
+        if self.coordinator.firmware_progress is None:
+            return None
+        return self.coordinator.firmware_progress.get("status")
+
+    @property
+    def extra_state_attributes(self) -> dict[str, Any] | None:
+        """Return the state attributes."""
+        if self.coordinator.firmware_progress is None:
+            return None
+        return {
+            "progress": self.coordinator.firmware_progress.get("progress"),
+            "type": self.coordinator.firmware_progress.get("type"),
+            "possible_statuses": ["IDLE", "IN_PROGRESS", "ERROR"],
+            "possible_types": ["F_FW", "F_FS", "C_FW"],
+        }
