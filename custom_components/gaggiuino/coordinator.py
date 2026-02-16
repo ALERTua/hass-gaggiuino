@@ -43,8 +43,9 @@ class GaggiuinoDataUpdateCoordinator(DataUpdateCoordinator):
         self._status: GaggiuinoStatus | None = None
         self._profile: GaggiuinoProfile | None = None
         self._profiles: list[GaggiuinoProfile] | None = None
+        self._healthy: bool = False
         self._latest_shot_id: int | None = None
-        self.gaggiuino_online = False
+        self.gaggiuino_online: bool = False
 
     async def _async_update_data(self) -> dict[str, Any] | None:
         """Update data via library."""
@@ -54,6 +55,7 @@ class GaggiuinoDataUpdateCoordinator(DataUpdateCoordinator):
                 self._status = await self.api.get_status()
                 self._profiles = await self.api.get_profiles()
                 self._profile = self.api.profile
+                self._healthy = await self.api.healthy()
                 latest_shot_id_result = await self.api.get_latest_shot_id()
                 if latest_shot_id_result is not None:
                     self._latest_shot_id = latest_shot_id_result.lastShotId
@@ -79,6 +81,7 @@ class GaggiuinoDataUpdateCoordinator(DataUpdateCoordinator):
             self._profile = None
             self._latest_shot_id = None
             self.gaggiuino_online = False
+            self._healthy = False
             _LOGGER.debug("Error on _async_update_data: %s %s", type(err), err)
             raise UpdateFailed(err) from err
 

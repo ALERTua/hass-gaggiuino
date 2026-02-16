@@ -50,6 +50,14 @@ BINARY_SENSORS = [
         value_fn=lambda coordinator: coordinator.gaggiuino_online,
     ),
     BinarySensorEntityDescription(
+        key="health",
+        translation_key="health",
+        name="Health",
+        device_class=BinarySensorDeviceClass.PROBLEM,
+        entity_category=EntityCategory.DIAGNOSTIC,
+        value_fn=lambda coordinator: not coordinator.health_ok(),
+    ),
+    BinarySensorEntityDescription(
         key="brew_switch",
         translation_key="brew_switch",
         name="Brew Switch",
