@@ -19,7 +19,7 @@ from gaggiuino_api import (
     GaggiuinoSystemSettings,
     GaggiuinoVersions,
 )
-from homeassistant.const import CONF_HOST
+from homeassistant.const import CONF_URL
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
 
 from .const import DOMAIN
@@ -44,7 +44,7 @@ class GaggiuinoDataUpdateCoordinator(DataUpdateCoordinator):
             name=DOMAIN,
             update_interval=UPDATE_INTERVAL,
         )
-        self.api: GaggiuinoAPI = GaggiuinoAPI(base_url=entry.data[CONF_HOST])
+        self.api: GaggiuinoAPI = GaggiuinoAPI(base_url=entry.data[CONF_URL])
         self.entry: ConfigEntry = entry
         self._status: GaggiuinoStatus | None = None
         self._profile: GaggiuinoProfile | None = None
