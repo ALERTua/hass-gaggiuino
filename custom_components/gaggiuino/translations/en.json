@@ -3,7 +3,7 @@
         "step": {
             "user": {
                 "data": {
-                    "url": "Gaggiuino URL. Usually {default_url} "
+                    "url": "Gaggiuino URL. Usually {default_url}"
                 }
             }
         },
