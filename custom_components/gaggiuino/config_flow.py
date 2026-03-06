@@ -9,14 +9,13 @@ import voluptuous as vol
 from gaggiuino_api import GaggiuinoAPI
 from gaggiuino_api.const import DEFAULT_BASE_URL
 from homeassistant import config_entries
-from homeassistant.const import CONF_HOST, CONF_URL
+from homeassistant.const import CONF_URL
 from homeassistant.exceptions import HomeAssistantError
 
 from .const import DOMAIN
 
 if TYPE_CHECKING:
-    from homeassistant.config_entries import ConfigEntry, ConfigFlowResult
-    from homeassistant.core import HomeAssistant
+    from homeassistant.config_entries import ConfigFlowResult
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -45,25 +44,6 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
     """Handle a config flow for Gaggiuino."""
 
     VERSION = 2
-
-    async def async_migrate_entry(
-        self,
-        hass: HomeAssistant,  # noqa: ARG002
-        entry: ConfigEntry,
-    ) -> ConfigFlowResult:
-        """Migrate config entry from version 1 to version 2."""
-        if entry.version == 1:
-            # Migrate from CONF_HOST ("host") to CONF_URL ("url")
-            if CONF_HOST in entry.data:
-                _LOGGER.debug("Migrating config entry from host to url")
-                new_data = {**entry.data}
-                new_data[CONF_URL] = new_data.pop(CONF_HOST)
-                return self.async_update_entry(entry, data=new_data, version=2)
-
-            # If already using new format, just update version
-            return self.async_update_entry(entry, version=2)
-
-        return entry
 
     async def async_step_user(
         self, user_input: dict[str, Any] | None = None

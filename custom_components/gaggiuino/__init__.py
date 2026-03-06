@@ -5,7 +5,7 @@ from __future__ import annotations
 import logging
 from typing import TYPE_CHECKING
 
-from homeassistant.const import Platform
+from homeassistant.const import CONF_HOST, CONF_URL, Platform
 from homeassistant.exceptions import ConfigEntryNotReady
 from httpx import TimeoutException
 
@@ -53,3 +53,28 @@ async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         hass.data[DOMAIN].pop(entry.entry_id)
 
     return unload_ok
+
+
+async def async_migrate_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
+    """Migrate old entry."""
+    _LOGGER.debug(
+        "Migrating %s config entry from version %s",
+        entry.title,
+        entry.version,
+    )
+
+    if entry.version == 1:
+        new_data = {**entry.data}
+
+        if CONF_HOST in new_data:
+            _LOGGER.debug("Migrating CONF_HOST -> CONF_URL")
+            new_data[CONF_URL] = new_data.pop(CONF_HOST)
+
+        hass.config_entries.async_update_entry(
+            entry,
+            data=new_data,
+            version=2,
+        )
+
+    _LOGGER.info("Migration to version %s successful", entry.version)
+    return True
