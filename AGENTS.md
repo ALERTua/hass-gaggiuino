@@ -11,9 +11,9 @@ hass-gaggiuino/
 ├── custom_components/
 │   └── gaggiuino/
 │       ├── __init__.py          # Integration setup and platform registration
-│       ├── binary_sensor.py     # Binary sensor entities (availability, health, switches)
+│       ├── binary_sensor.py     # Binary sensor entities (availability, health, ready to brew, switches)
 │       ├── config_flow.py       # UI configuration flow
-│       ├── const.py             # Constants (DOMAIN, CONF_PROFILE)
+│       ├── const.py             # Constants (DOMAIN, ready-to-brew thresholds)
 │       ├── coordinator.py       # Data update coordinator - fetches and caches all API data
 │       ├── light.py             # LED light entity with RGB support
 │       ├── manifest.json        # Integration metadata and dependencies
@@ -104,6 +104,7 @@ class GaggiuinoEntity(CoordinatorEntity, PlatformEntity):
 ### Frozen Dataclasses
 
 The API models are frozen dataclasses. **Never try to modify their attributes directly.** Instead:
+
 - Create a new instance with updated values
 - Use `to_api_dict()` method to get a mutable dictionary for updates
 
@@ -127,6 +128,14 @@ The API models are frozen dataclasses. **Never try to modify their attributes di
 2. Add to `async_setup_entry()` function
 3. Add translation key to translations
 4. Add update method to coordinator if needed
+
+### Ready to Brew binary sensor
+
+The `ready_to_brew` binary sensor ([`binary_sensor.py`](custom_components/gaggiuino/binary_sensor.py)) is a dedicated entity (not in the `BINARY_SENSORS` tuple) because it tracks state over time:
+
+- **On** when `coordinator.gaggiuino_online` is true and `abs(temperature - targetTemperature) <= READY_TEMP_TOLERANCE_C` continuously for `READY_STABILISATION_SECONDS` (120s).
+- Uses `async_track_point_in_time` so the sensor turns on near the end of the hold window, not only on the 30s coordinator poll.
+- Tolerance and stabilisation duration are constants in [`const.py`](custom_components/gaggiuino/const.py); configurable delay via options flow is a possible follow-up.
 
 ### Updating Settings
 
