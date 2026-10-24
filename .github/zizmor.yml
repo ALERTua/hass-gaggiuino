@@ -1,0 +1,6 @@
+# https://docs.zizmor.sh/configuration/
+rules:
+  dependabot-cooldown:
+    config:
+      # Dependabot waits 3 days for a new release, the same as its own default
+      days: 3

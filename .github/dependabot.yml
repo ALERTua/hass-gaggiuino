@@ -6,9 +6,9 @@ updates:
     directory: "/"
     schedule:
       interval: weekly
-    # a release must be a week old first, so a broken or hostile release can be withdrawn
+    # a release must be 3 days old first, so a broken or hostile release can be withdrawn
     cooldown:
-      default-days: 7
+      default-days: 3
     groups:
       actions:
         patterns: ["*"]
@@ -20,13 +20,14 @@ updates:
       interval: weekly
     # the cooldown applies only to version updates, security updates come at once
     cooldown:
-      default-days: 7
+      default-days: 3
     ignore:
       # a new ruff or ty release adds checks that can fail the hooks, so update them by hand
       - dependency-name: ruff
       - dependency-name: ty
       # homeassistant pins Pillow to one version, so Pillow moves only together with homeassistant
       - dependency-name: pillow
+      - dependency-name: gaggiuino-api
     groups:
       # minor and patch updates in one pull request, each major update in its own
       python:
@@ -39,7 +40,7 @@ updates:
     schedule:
       interval: weekly
     cooldown:
-      default-days: 7
+      default-days: 3
     ignore:
       # the same reason as ruff and ty above
       - dependency-name: https://github.com/astral-sh/ruff-pre-commit
