@@ -38,3 +38,12 @@ jobs:
 
       - name: Pre-commit on all files
         run: uv run pre-commit run --all-files
+
+  dependabot-merge:
+    # merges a patch or minor update of Dependabot after the checks pass
+    needs: checks
+    if: github.event.pull_request.user.login == 'dependabot[bot]'
+    uses: ALERTua/ci-workflows/.github/workflows/dependabot-merge.yml@v4.1.0
+    permissions:
+      contents: write # merge of the pull request
+      pull-requests: write # merge of the pull request
