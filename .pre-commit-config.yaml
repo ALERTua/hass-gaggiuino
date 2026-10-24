@@ -21,7 +21,7 @@ repos:
 
 # https://docs.astral.sh/uv/guides/integration/pre-commit/
 - repo: https://github.com/astral-sh/uv-pre-commit
-  rev: 0.12.19
+  rev: 0.13.5
   hooks:
     - id: uv-lock
 
@@ -29,3 +29,13 @@ repos:
   rev: v2.0.3
   hooks:
     - id: todo-md
+
+- repo: https://github.com/rhysd/actionlint
+  rev: v1.7.12
+  hooks:
+    - id: actionlint
+
+- repo: https://github.com/zizmorcore/zizmor-pre-commit
+  rev: v1.31.1
+  hooks:
+    - id: zizmor

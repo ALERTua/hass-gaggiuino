@@ -1,18 +1,49 @@
-# https://docs.github.com/en/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file
+# https://docs.github.com/en/code-security/dependabot/working-with-dependabot/dependabot-options-reference
 version: 2
 updates:
+  # the actions of the workflows
   - package-ecosystem: github-actions
     directory: "/"
     schedule:
-      interval: "weekly"
+      interval: weekly
+    # a release must be a week old first, so a broken or hostile release can be withdrawn
+    cooldown:
+      default-days: 7
     groups:
       actions:
         patterns: ["*"]
 
+  # pyproject.toml and uv.lock together
   - package-ecosystem: uv
     directory: "/"
     schedule:
-      interval: "weekly"
+      interval: weekly
+    # the cooldown applies only to version updates, security updates come at once
+    cooldown:
+      default-days: 7
     ignore:
-      # Dependabot should not update Home Assistant as that should match the homeassistant key in hacs.json
-      - dependency-name: "homeassistant"
+      # a new ruff or ty release adds checks that can fail the hooks, so update them by hand
+      - dependency-name: ruff
+      - dependency-name: ty
+      # homeassistant pins Pillow to one version, so Pillow moves only together with homeassistant
+      - dependency-name: pillow
+    groups:
+      # minor and patch updates in one pull request, each major update in its own
+      python:
+        patterns: ["*"]
+        update-types: [minor, patch]
+
+  # the rev of each hook in .pre-commit-config.yaml
+  - package-ecosystem: pre-commit
+    directory: "/"
+    schedule:
+      interval: weekly
+    cooldown:
+      default-days: 7
+    ignore:
+      # the same reason as ruff and ty above
+      - dependency-name: https://github.com/astral-sh/ruff-pre-commit
+      - dependency-name: https://github.com/astral-sh/ty-pre-commit
+    groups:
+      pre-commit:
+        patterns: ["*"]
