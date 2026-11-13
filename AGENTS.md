@@ -4,6 +4,10 @@
 
 This is a Home Assistant custom integration for the Gaggiuino espresso machine controller. It provides sensors, binary sensors, selects, numbers, switches, and lights to monitor and control a Gaggiuino device through its API.
 
+## Project memory
+
+Read `.claude/memory/MEMORY.md` before each task. It holds the project memory. When a task touches a topic of an index line, read the file of that line.
+
 ## Project Structure
 
 ```

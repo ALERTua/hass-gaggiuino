@@ -23,4 +23,6 @@ tryouts*.py
 # Home Assistant configuration
 config/*
 !config/configuration.yaml
-.claude
+# Claude Code: only the project memory goes into git
+.claude/*
+!.claude/memory/
