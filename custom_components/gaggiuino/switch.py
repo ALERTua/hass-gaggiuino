@@ -1,7 +1,5 @@
 """Platform for Gaggiuino switch entities."""
 
-from __future__ import annotations
-
 import logging
 from typing import TYPE_CHECKING, Any
 
@@ -10,15 +8,16 @@ from homeassistant.const import EntityCategory
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
 
 from .const import DOMAIN
+from .coordinator import GaggiuinoDataUpdateCoordinator
 
 if TYPE_CHECKING:
     from homeassistant.config_entries import ConfigEntry
     from homeassistant.core import HomeAssistant
     from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
-    from .coordinator import GaggiuinoDataUpdateCoordinator
-
 _LOGGER = logging.getLogger(__name__)
+
+PARALLEL_UPDATES = 1
 
 
 async def async_setup_entry(
@@ -34,11 +33,14 @@ async def async_setup_entry(
             GaggiuinoForcePredictiveSwitch(coordinator),
             GaggiuinoHwScalesEnabledSwitch(coordinator),
             GaggiuinoBtScalesEnabledSwitch(coordinator),
+            GaggiuinoDisplayDarkModeSwitch(coordinator),
         ]
     )
 
 
-class GaggiuinoLedDiscoSwitch(CoordinatorEntity, SwitchEntity):
+class GaggiuinoLedDiscoSwitch(
+    CoordinatorEntity[GaggiuinoDataUpdateCoordinator], SwitchEntity
+):
     """Representation of a Gaggiuino LED disco switch."""
 
     _attr_entity_category = EntityCategory.CONFIG
@@ -54,34 +56,22 @@ class GaggiuinoLedDiscoSwitch(CoordinatorEntity, SwitchEntity):
         self._attr_device_info = coordinator.device_info
 
     @property
-    def is_on(self) -> bool | None:
+    def is_on(self) -> bool:
         """Return True if the switch is on."""
-        if self.coordinator.led_settings is None:
-            return None
-        return self.coordinator.led_settings.disco
+        return self.coordinator.data.settings.led.disco
 
     async def async_turn_on(self, **_kwargs: Any) -> None:
         """Turn the switch on."""
-        if self.coordinator.led_settings is None:
-            return
-
-        new_settings = self.coordinator.led_settings.to_api_dict()
-        new_settings["disco"] = True
-
-        await self.coordinator.update_led_settings(new_settings)
+        await self.coordinator.async_update_settings("led", disco=True)
 
     async def async_turn_off(self, **_kwargs: Any) -> None:
         """Turn the switch off."""
-        if self.coordinator.led_settings is None:
-            return
-
-        new_settings = self.coordinator.led_settings.to_api_dict()
-        new_settings["disco"] = False
-
-        await self.coordinator.update_led_settings(new_settings)
+        await self.coordinator.async_update_settings("led", disco=False)
 
 
-class GaggiuinoForcePredictiveSwitch(CoordinatorEntity, SwitchEntity):
+class GaggiuinoForcePredictiveSwitch(
+    CoordinatorEntity[GaggiuinoDataUpdateCoordinator], SwitchEntity
+):
     """Representation of a Gaggiuino force predictive switch."""
 
     _attr_entity_category = EntityCategory.CONFIG
@@ -97,34 +87,22 @@ class GaggiuinoForcePredictiveSwitch(CoordinatorEntity, SwitchEntity):
         self._attr_device_info = coordinator.device_info
 
     @property
-    def is_on(self) -> bool | None:
+    def is_on(self) -> bool:
         """Return True if the switch is on."""
-        if self.coordinator.scales_settings is None:
-            return None
-        return self.coordinator.scales_settings.forcePredictive
+        return self.coordinator.data.settings.scales.force_predictive
 
     async def async_turn_on(self, **_kwargs: Any) -> None:
         """Turn the switch on."""
-        if self.coordinator.scales_settings is None:
-            return
-
-        new_settings = self.coordinator.scales_settings.to_api_dict()
-        new_settings["forcePredictive"] = True
-
-        await self.coordinator.update_scales_settings(new_settings)
+        await self.coordinator.async_update_settings("scales", force_predictive=True)
 
     async def async_turn_off(self, **_kwargs: Any) -> None:
         """Turn the switch off."""
-        if self.coordinator.scales_settings is None:
-            return
-
-        new_settings = self.coordinator.scales_settings.to_api_dict()
-        new_settings["forcePredictive"] = False
-
-        await self.coordinator.update_scales_settings(new_settings)
+        await self.coordinator.async_update_settings("scales", force_predictive=False)
 
 
-class GaggiuinoHwScalesEnabledSwitch(CoordinatorEntity, SwitchEntity):
+class GaggiuinoHwScalesEnabledSwitch(
+    CoordinatorEntity[GaggiuinoDataUpdateCoordinator], SwitchEntity
+):
     """Representation of a Gaggiuino hardware scales enabled switch."""
 
     _attr_entity_category = EntityCategory.CONFIG
@@ -140,34 +118,22 @@ class GaggiuinoHwScalesEnabledSwitch(CoordinatorEntity, SwitchEntity):
         self._attr_device_info = coordinator.device_info
 
     @property
-    def is_on(self) -> bool | None:
+    def is_on(self) -> bool:
         """Return True if the switch is on."""
-        if self.coordinator.scales_settings is None:
-            return None
-        return self.coordinator.scales_settings.hwScalesEnabled
+        return self.coordinator.data.settings.scales.hw_scales_enabled
 
     async def async_turn_on(self, **_kwargs: Any) -> None:
         """Turn the switch on."""
-        if self.coordinator.scales_settings is None:
-            return
-
-        new_settings = self.coordinator.scales_settings.to_api_dict()
-        new_settings["hwScalesEnabled"] = True
-
-        await self.coordinator.update_scales_settings(new_settings)
+        await self.coordinator.async_update_settings("scales", hw_scales_enabled=True)
 
     async def async_turn_off(self, **_kwargs: Any) -> None:
         """Turn the switch off."""
-        if self.coordinator.scales_settings is None:
-            return
-
-        new_settings = self.coordinator.scales_settings.to_api_dict()
-        new_settings["hwScalesEnabled"] = False
-
-        await self.coordinator.update_scales_settings(new_settings)
+        await self.coordinator.async_update_settings("scales", hw_scales_enabled=False)
 
 
-class GaggiuinoBtScalesEnabledSwitch(CoordinatorEntity, SwitchEntity):
+class GaggiuinoBtScalesEnabledSwitch(
+    CoordinatorEntity[GaggiuinoDataUpdateCoordinator], SwitchEntity
+):
     """Representation of a Gaggiuino Bluetooth scales enabled switch."""
 
     _attr_entity_category = EntityCategory.CONFIG
@@ -183,28 +149,45 @@ class GaggiuinoBtScalesEnabledSwitch(CoordinatorEntity, SwitchEntity):
         self._attr_device_info = coordinator.device_info
 
     @property
-    def is_on(self) -> bool | None:
+    def is_on(self) -> bool:
         """Return True if the switch is on."""
-        if self.coordinator.scales_settings is None:
-            return None
-        return self.coordinator.scales_settings.btScalesEnabled
+        return self.coordinator.data.settings.scales.bt_scales_enabled
 
     async def async_turn_on(self, **_kwargs: Any) -> None:
         """Turn the switch on."""
-        if self.coordinator.scales_settings is None:
-            return
-
-        new_settings = self.coordinator.scales_settings.to_api_dict()
-        new_settings["btScalesEnabled"] = True
-
-        await self.coordinator.update_scales_settings(new_settings)
+        await self.coordinator.async_update_settings("scales", bt_scales_enabled=True)
 
     async def async_turn_off(self, **_kwargs: Any) -> None:
         """Turn the switch off."""
-        if self.coordinator.scales_settings is None:
-            return
+        await self.coordinator.async_update_settings("scales", bt_scales_enabled=False)
 
-        new_settings = self.coordinator.scales_settings.to_api_dict()
-        new_settings["btScalesEnabled"] = False
 
-        await self.coordinator.update_scales_settings(new_settings)
+class GaggiuinoDisplayDarkModeSwitch(
+    CoordinatorEntity[GaggiuinoDataUpdateCoordinator], SwitchEntity
+):
+    """Representation of the dark mode of the display."""
+
+    _attr_entity_category = EntityCategory.CONFIG
+
+    def __init__(self, coordinator: GaggiuinoDataUpdateCoordinator) -> None:
+        """Initialize the switch."""
+        super().__init__(coordinator)
+        self._attr_unique_id = f"{coordinator.entry.entry_id}_display_dark_mode"
+        self._attr_name = "Display Dark Mode"
+        self._attr_has_entity_name = True
+        self._attr_translation_key = "display_dark_mode"
+        self._attr_icon = "mdi:theme-light-dark"
+        self._attr_device_info = coordinator.device_info
+
+    @property
+    def is_on(self) -> bool:
+        """Return True if the switch is on."""
+        return self.coordinator.data.settings.display.lcd_dark_mode
+
+    async def async_turn_on(self, **_kwargs: Any) -> None:
+        """Turn the switch on."""
+        await self.coordinator.async_update_settings("display", lcd_dark_mode=True)
+
+    async def async_turn_off(self, **_kwargs: Any) -> None:
+        """Turn the switch off."""
+        await self.coordinator.async_update_settings("display", lcd_dark_mode=False)

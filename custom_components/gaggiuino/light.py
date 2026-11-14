@@ -1,11 +1,11 @@
 """Platform for Gaggiuino light entities."""
 
-from __future__ import annotations
-
 import logging
 from typing import TYPE_CHECKING, Any, ClassVar
 
+from gaggiuino_api import LedColor
 from homeassistant.components.light import (
+    ATTR_RGB_COLOR,
     ColorMode,
     LightEntity,
 )
@@ -13,15 +13,16 @@ from homeassistant.const import EntityCategory
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
 
 from .const import DOMAIN
+from .coordinator import GaggiuinoDataUpdateCoordinator
 
 if TYPE_CHECKING:
     from homeassistant.config_entries import ConfigEntry
     from homeassistant.core import HomeAssistant
     from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
-    from .coordinator import GaggiuinoDataUpdateCoordinator
-
 _LOGGER = logging.getLogger(__name__)
+
+PARALLEL_UPDATES = 1
 
 
 async def async_setup_entry(
@@ -34,7 +35,7 @@ async def async_setup_entry(
     async_add_entities([GaggiuinoLedLight(coordinator)])
 
 
-class GaggiuinoLedLight(CoordinatorEntity, LightEntity):
+class GaggiuinoLedLight(CoordinatorEntity[GaggiuinoDataUpdateCoordinator], LightEntity):
     """Representation of a Gaggiuino LED light."""
 
     _attr_entity_category = EntityCategory.CONFIG
@@ -52,11 +53,9 @@ class GaggiuinoLedLight(CoordinatorEntity, LightEntity):
         self._attr_device_info = coordinator.device_info
 
     @property
-    def is_on(self) -> bool | None:
+    def is_on(self) -> bool:
         """Return True if the light is on."""
-        if self.coordinator.led_settings is None:
-            return None
-        return self.coordinator.led_settings.state
+        return self.coordinator.data.settings.led.state
 
     @property
     def brightness(self) -> int | None:
@@ -65,36 +64,20 @@ class GaggiuinoLedLight(CoordinatorEntity, LightEntity):
         return None
 
     @property
-    def rgb_color(self) -> tuple[int, int, int] | None:
+    def rgb_color(self) -> tuple[int, int, int]:
         """Return the RGB color of the light."""
-        if self.coordinator.led_settings is None:
-            return None
-        color = self.coordinator.led_settings.color
-        return (color.R, color.G, color.B)
+        color = self.coordinator.data.settings.led.color
+        return (color.r, color.g, color.b)
 
     async def async_turn_on(self, **kwargs: Any) -> None:
         """Turn the light on."""
-        if self.coordinator.led_settings is None:
-            return
+        changes: dict[str, Any] = {"state": True}
+        if ATTR_RGB_COLOR in kwargs:
+            r, g, b = kwargs[ATTR_RGB_COLOR]
+            changes["color"] = LedColor(r=r, g=g, b=b)
 
-        new_settings = self.coordinator.led_settings.to_api_dict()
-        new_settings["state"] = True
-
-        # Handle RGB color if provided
-        if "rgb_color" in kwargs:
-            r, g, b = kwargs["rgb_color"]
-            new_settings["color"] = {"R": r, "G": g, "B": b}
-
-        await self.coordinator.update_led_settings(new_settings)
-        await self.coordinator.async_request_refresh()
+        await self.coordinator.async_update_settings("led", **changes)
 
     async def async_turn_off(self, **_kwargs: Any) -> None:
         """Turn the light off."""
-        if self.coordinator.led_settings is None:
-            return
-
-        new_settings = self.coordinator.led_settings.to_api_dict()
-        new_settings["state"] = False
-
-        await self.coordinator.update_led_settings(new_settings)
-        await self.coordinator.async_request_refresh()
+        await self.coordinator.async_update_settings("led", state=False)

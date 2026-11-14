@@ -39,6 +39,9 @@ jobs:
       - name: Pre-commit on all files
         run: uv run pre-commit run --all-files
 
+      - name: Tests
+        run: uv run pytest tests
+
   dependabot-merge:
     # merges a patch or minor update of Dependabot after the checks pass
     needs: checks

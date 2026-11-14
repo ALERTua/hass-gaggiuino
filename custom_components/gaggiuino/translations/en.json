@@ -1,19 +1,27 @@
 {
     "config": {
+        "flow_title": "{host}",
         "step": {
             "user": {
                 "data": {
                     "url": "Gaggiuino URL. Usually {default_url}"
                 }
+            },
+            "zeroconf_confirm": {
+                "title": "Set up Gaggiuino",
+                "description": "Home Assistant found a Gaggiuino machine at {host}. Do you want to set it up?"
             }
         },
         "error": {
             "cannot_connect": "Failed to connect",
             "invalid_auth": "Invalid authentication",
+            "unsupported_firmware": "The machine answered in a format that this version of the integration does not support. It needs Gaggiuino firmware {minimum_firmware} or newer.",
             "unknown": "Unexpected error"
         },
         "abort": {
-            "already_configured": "Device is already configured"
+            "already_configured": "Device is already configured",
+            "cannot_connect": "Failed to connect",
+            "unsupported_firmware": "The machine answered in a format that this version of the integration does not support. It needs Gaggiuino firmware {minimum_firmware} or newer."
         }
     },
     "entity": {
@@ -56,6 +64,70 @@
             },
             "firmware_status": {
                 "name": "Firmware Status"
+            },
+            "operation_mode": {
+                "name": "Operation Mode",
+                "state": {
+                    "brew_auto": "Brew (auto)",
+                    "brew_manual": "Brew (manual)",
+                    "flush": "Flush",
+                    "descale": "Descale",
+                    "steam": "Steam",
+                    "flush_auto": "Flush (auto)",
+                    "hot_water": "Hot water",
+                    "home": "Home",
+                    "pump_calibration": "Pump calibration",
+                    "power_off": "Power off",
+                    "unknown": "Unknown"
+                }
+            },
+            "power": {
+                "name": "Power"
+            },
+            "energy": {
+                "name": "Energy"
+            },
+            "session_energy": {
+                "name": "Session Energy"
+            },
+            "pump_flow": {
+                "name": "Pump Flow"
+            },
+            "weight_flow": {
+                "name": "Weight Flow"
+            },
+            "warmup_remaining": {
+                "name": "Warmup Remaining"
+            },
+            "warmup_elapsed": {
+                "name": "Warmup Elapsed"
+            },
+            "boiler_temperature": {
+                "name": "Boiler Temperature"
+            },
+            "readiness_state": {
+                "name": "Readiness State"
+            },
+            "core_type": {
+                "name": "Core Type"
+            },
+            "power_line_frequency": {
+                "name": "Power Line Frequency"
+            },
+            "machine_name": {
+                "name": "Machine Name"
+            },
+            "last_descale": {
+                "name": "Last Descale"
+            },
+            "shots_since_descale": {
+                "name": "Shots Since Descale"
+            },
+            "last_backflush": {
+                "name": "Last Backflush"
+            },
+            "shots_since_backflush": {
+                "name": "Shots Since Backflush"
             }
         },
         "binary_sensor": {
@@ -70,6 +142,54 @@
             },
             "steam_switch": {
                 "name": "Steam Switch"
+            },
+            "brewing": {
+                "name": "Brewing"
+            },
+            "steaming": {
+                "name": "Steaming"
+            },
+            "hot_water": {
+                "name": "Hot Water"
+            },
+            "boiler_heating": {
+                "name": "Boiler Heating"
+            },
+            "scales_present": {
+                "name": "Scales"
+            },
+            "thermocouple_fault": {
+                "name": "Thermocouple Fault"
+            },
+            "pressure_sensor_fault": {
+                "name": "Pressure Sensor Fault"
+            },
+            "steam_forgotten_on": {
+                "name": "Steam Left On"
+            },
+            "brew_valve": {
+                "name": "Brew Valve"
+            },
+            "steam_valve": {
+                "name": "Steam Valve"
+            },
+            "valve_b": {
+                "name": "Valve B"
+            },
+            "steam_boiler_relay": {
+                "name": "Steam Boiler Relay"
+            },
+            "tare_pending": {
+                "name": "Tare Pending"
+            },
+            "tof_ready": {
+                "name": "Water Level Sensor Ready"
+            },
+            "startup_finished": {
+                "name": "Startup Finished"
+            },
+            "brew_switch_active": {
+                "name": "Brew Switch Active"
             }
         },
         "select": {
@@ -83,6 +203,9 @@
         "number": {
             "steam_set_point": {
                 "name": "Steam"
+            },
+            "display_brightness": {
+                "name": "Display Brightness"
             }
         },
         "switch": {
@@ -97,6 +220,9 @@
             },
             "bt_scales_enabled": {
                 "name": "Bluetooth Scales"
+            },
+            "display_dark_mode": {
+                "name": "Display Dark Mode"
             }
         },
         "light": {

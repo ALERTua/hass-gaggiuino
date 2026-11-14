@@ -1,0 +1,12 @@
+{
+  "steamSetPoint": 125,
+  "offsetTemp": 7,
+  "hpwr": 550,
+  "mainDivider": 5,
+  "brewDivider": 3,
+  "brewDeltaState": true,
+  "dreamSteamState": true,
+  "startupHeatDelta": 3,
+  "dualBoilerEnabled": false,
+  "dualBoilerStagger": false
+}

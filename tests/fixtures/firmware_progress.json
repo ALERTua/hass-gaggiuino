@@ -1,0 +1,27 @@
+{
+  "progress": 0,
+  "status": "IDLE",
+  "type": "C_FW",
+  "migration": {
+    "layoutVersion": 2,
+    "layout": "s3-v2",
+    "phase": 8,
+    "attempts": 0,
+    "retryAllowed": false,
+    "error": "",
+    "productionVersion": "8aaf6f0",
+    "target": "s3-lcd",
+    "headless": false,
+    "runningVersion": "c929939",
+    "available": false,
+    "active": false,
+    "state": "idle",
+    "message": "",
+    "operation": "",
+    "operationDone": 0,
+    "operationTotal": 0,
+    "activityAgeMs": 13130401,
+    "percent": 100,
+    "page": "/migration"
+  }
+}

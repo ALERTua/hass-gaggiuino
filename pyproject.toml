@@ -5,7 +5,7 @@ description = "Home Assistant HACS Integration for Gagggiuino"
 readme = "README.md"
 requires-python = ">=3.14.2"  # follows https://github.com/home-assistant/core/blob/dev/pyproject.toml#L25
 dependencies = [
-    "gaggiuino-api==0.1.14",  # Do not forget to change this in the manifest.json
+    "gaggiuino-api==1.0.0",  # Do not forget to change this in the manifest.json
 ]
 
 [dependency-groups]
@@ -13,6 +13,7 @@ dev = [
     "homeassistant",
     "pytest-asyncio",
     "pre-commit-uv",
+    "pytest-homeassistant-custom-component",
 ]
 
 [tool.setuptools]
@@ -20,6 +21,12 @@ packages = ["custom_components.gaggiuino"]
 
 [tool.pytest.ini_options]
 minversion = "8.3.5"
-addopts = "-ra -q"
+addopts = "-ra -q -m 'not e2e'"
+pythonpath = ["."]
+testpaths = ["tests"]
+timeout = 30
 asyncio_mode = "auto"
-asyncio_default_fixture_loop_scope = "session"
+asyncio_default_fixture_loop_scope = "function"
+markers = [
+    "e2e: marks tests as end-to-end tests that require a real machine on the network (deselect with '-m \"not e2e\"')",
+]

@@ -1,0 +1,15 @@
+{
+  "lcdBrightness": 61,
+  "lcdDarkMode": true,
+  "lcdSleep": 16,
+  "lcdGoHome": 600,
+  "lcdCloseOnBrewOff": true,
+  "modernUI": true,
+  "homeTileLeftTop": 0,
+  "homeTileLeftBottom": 0,
+  "homeTileRightTop": 0,
+  "homeTileLeftTopGroup": 0,
+  "homeTileLeftBottomGroup": 0,
+  "homeTileRightTopGroup": 0,
+  "homeLayout": ""
+}
