@@ -1,0 +1,61 @@
+{
+  "name": "_Long",
+  "phases": [
+    {
+      "target": {
+        "start": 3,
+        "end": 4,
+        "curve": "INSTANT"
+      },
+      "stopConditions": {
+        "time": 8000,
+        "weight": 1
+      },
+      "type": "FLOW",
+      "skip": false,
+      "restriction": 1.9
+    },
+    {
+      "target": {
+        "start": 1.9,
+        "end": 1.4,
+        "curve": "INSTANT"
+      },
+      "stopConditions": {
+        "time": 10000,
+        "weight": 0.1
+      },
+      "type": "FLOW",
+      "skip": false,
+      "restriction": 1.8
+    },
+    {
+      "target": {
+        "end": 0,
+        "curve": "INSTANT"
+      },
+      "stopConditions": {
+        "time": 15000
+      },
+      "type": "FLOW",
+      "skip": false,
+      "restriction": 1
+    },
+    {
+      "target": {
+        "start": 2,
+        "end": 2,
+        "curve": "INSTANT"
+      },
+      "stopConditions": {},
+      "type": "FLOW",
+      "skip": false,
+      "restriction": 9
+    }
+  ],
+  "globalStopConditions": {
+    "weight": 50
+  },
+  "waterTemperature": 92,
+  "recipe": {}
+}

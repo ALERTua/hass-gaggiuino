@@ -1,13 +1,11 @@
 """The Gaggiuino integration."""
 
-from __future__ import annotations
-
 import logging
 from typing import TYPE_CHECKING
 
+from gaggiuino_api import GaggiuinoConnectionError, GaggiuinoConnectionTimeoutError
 from homeassistant.const import CONF_HOST, CONF_URL, Platform
 from homeassistant.exceptions import ConfigEntryNotReady
-from httpx import TimeoutException
 
 from .const import DOMAIN
 from .coordinator import GaggiuinoDataUpdateCoordinator
@@ -32,12 +30,16 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     """Set up Gaggiuino from a config entry."""
     hass.data.setdefault(DOMAIN, {})
 
-    _LOGGER.debug("Gaggiuino async_config_entry_first_refresh")
+    _LOGGER.debug("Gaggiuino first refresh")
     _coordinator = GaggiuinoDataUpdateCoordinator(hass, entry)
-    try:
-        await _coordinator.async_config_entry_first_refresh()
-    except (TimeoutError, TimeoutException) as ex:
-        raise ConfigEntryNotReady from ex
+    await _coordinator.async_refresh()
+    # A machine that is off still sets up; any other failure, e.g. an old firmware, does not.
+    if not _coordinator.last_update_success and (error := _coordinator.last_exception):
+        cause = error.__cause__
+        if not isinstance(
+            cause, GaggiuinoConnectionError | GaggiuinoConnectionTimeoutError
+        ):
+            raise ConfigEntryNotReady(str(error)) from error
 
     _LOGGER.debug("Gaggiuino async_forward_entry_setups")
     hass.data[DOMAIN][entry.entry_id] = _coordinator

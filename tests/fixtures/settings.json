@@ -1,0 +1,110 @@
+{
+  "boiler": {
+    "steamSetPoint": 125,
+    "offsetTemp": 7,
+    "hpwr": 550,
+    "mainDivider": 5,
+    "brewDivider": 3,
+    "brewDeltaState": true,
+    "dreamSteamState": true,
+    "startupHeatDelta": 3,
+    "dualBoilerEnabled": false,
+    "dualBoilerStagger": false
+  },
+  "system": {
+    "machineName": "Gaggiuino",
+    "pumpFlowAtZero": 0.2401,
+    "timezoneOffsetMinutes": 120,
+    "sprofilerToken": "sprofiler-token",
+    "visualizerToken": "visualizer-token",
+    "servicesState": false,
+    "wifiEnabled": true,
+    "releaseChannel": 0,
+    "momentarySwitches": false,
+    "ungroupHomeTiles": false,
+    "alternativeFlush": false,
+    "mqttEnabled": false,
+    "mqttHost": "mqtt.example.com",
+    "mqttPort": 1883,
+    "mqttUsername": "mqtt-user",
+    "mqttPassword": "mqtt-password",
+    "mqttTopicPrefix": "gaggiuino",
+    "minShotDurationSeconds": 5,
+    "autoFlushDurationSeconds": 5,
+    "pumpSpecValid": false,
+    "pumpSpec": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  "led": {
+    "color": {
+      "R": 9,
+      "G": 0,
+      "B": 9
+    },
+    "state": false,
+    "disco": true,
+    "tof": {
+      "max": 6,
+      "min": 127
+    }
+  },
+  "scales": {
+    "forcePredictive": false,
+    "hwScalesEnabled": false,
+    "hwScalesF1": 2117,
+    "hwScalesF2": 2169,
+    "btScalesEnabled": true,
+    "btScalesAutoConnect": true,
+    "btScalesPinnedMac": "AA:BB:CC:DD:EE:FF"
+  },
+  "display": {
+    "lcdBrightness": 61,
+    "lcdDarkMode": true,
+    "lcdSleep": 16,
+    "lcdGoHome": 600,
+    "lcdCloseOnBrewOff": true,
+    "modernUI": true,
+    "homeTileLeftTop": 0,
+    "homeTileLeftBottom": 0,
+    "homeTileRightTop": 0,
+    "homeTileLeftTopGroup": 0,
+    "homeTileLeftBottomGroup": 0,
+    "homeTileRightTopGroup": 0,
+    "homeLayout": ""
+  },
+  "theme": {
+    "colourPrimary": 8,
+    "colourSecondary": 17
+  },
+  "versions": {
+    "coreVersion": "c929939",
+    "frontVersion": "c929939",
+    "staticVersion": "1af8db8"
+  },
+  "webUi": {
+    "configured": true,
+    "themeId": "oled",
+    "dashboardLayout": "[{\"id\":\"temperature\",\"type\":\"temperature\",\"cols\":2,\"rows\":2},{\"id\":\"chrono\",\"type\":\"chrono\",\"cols\":2,\"rows\":1},{\"id\":\"water\",\"type\":\"water\",\"cols\":2,\"rows\":1},{\"id\":\"pressure\",\"type\":\"pressure\",\"cols\":2,\"rows\":1},{\"id\":\"scale\",\"type\":\"scale\",\"cols\":2,\"rows\":1}]",
+    "dashboardFontSize": "normal",
+    "brewHeaterWatts": 1300,
+    "steamHeaterWatts": 1000,
+    "pumpWatts": 45,
+    "idleWatts": 4
+  }
+}

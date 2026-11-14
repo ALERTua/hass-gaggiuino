@@ -1,0 +1,9 @@
+{
+  "forcePredictive": false,
+  "hwScalesEnabled": false,
+  "hwScalesF1": 2117,
+  "hwScalesF2": 2169,
+  "btScalesEnabled": true,
+  "btScalesAutoConnect": true,
+  "btScalesPinnedMac": "AA:BB:CC:DD:EE:FF"
+}

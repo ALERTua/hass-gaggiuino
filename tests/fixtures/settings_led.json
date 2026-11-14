@@ -1,0 +1,13 @@
+{
+  "color": {
+    "R": 9,
+    "G": 0,
+    "B": 9
+  },
+  "state": false,
+  "disco": true,
+  "tof": {
+    "max": 6,
+    "min": 127
+  }
+}
