@@ -86,6 +86,8 @@ Integration setup complete. Your Gaggiuino is now available as a device.
 
 The integration makes these entities for the machine. An entity that is off by default is hidden from the start. To use it, open the entity in Home Assistant and turn it on. The Energy sensor is an estimate that the machine makes, not a meter. The fields that the integration leaves out on purpose are in [UNSUPPORTED.md](UNSUPPORTED.md).
 
+The firmware can announce its own entities to Home Assistant over MQTT. If that MQTT discovery is on, both devices have the name Gaggiuino, and some entities of the two devices want the same entity id. The entity that reserves the id second gets `_2` at the end, for example `sensor.gaggiuino_boiler_temperature_2`. So the setup that you add later gets the suffix, the MQTT discovery or this integration. You can rename such an entity, or disable the copy that you do not need.
+
 ### Sensors
 
 | Entity | What it shows | On by default |
