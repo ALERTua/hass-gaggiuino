@@ -12,7 +12,7 @@
   "requirements": [
     "gaggiuino_api==1.0.0"
   ],
-  "version": "2026.3.2",
+  "version": "2026.11.1",
   "zeroconf": [
     {
       "name": "gaggiuino*",
